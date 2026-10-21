@@ -1,56 +1,57 @@
 
-/* Page styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f4f8;
-    color: #243447;
+    background-color: #17131f;
+    color: #f3e8ff;
     margin: 20px;
     padding: 20px;
 }
 
-/* ID selector */
 #main-title {
-    color: #123c69;
-    background-color: #dbeafe;
+    color: #ff8c00;
+    background-color: #292035;
     text-align: center;
-    padding: 20px;
+    padding: 25px;
     margin-bottom: 25px;
-    border: 3px solid #f28c28;
+    border: 3px solid #f97316;
+    border-radius: 12px;
 }
 
-/* Type selector */
 p {
     line-height: 1.7;
     margin: 15px 0;
-    padding: 12px;
-    border: 1px solid #b8cde0;
-    background-color: white;
-}
-
-/* Class selector */
-.content-box {
-    background-color: #dbeafe;
-    padding: 20px;
-    margin: 20px 0;
-    border: 2px solid #123c69;
+    padding: 15px;
+    border: 1px solid #7c3aed;
+    background-color: #241d30;
+    color: #f3e8ff;
     border-radius: 8px;
 }
 
-/* List styling */
-ul {
-    padding: 15px 35px;
-    margin: 15px 0;
-    background-color: white;
-    border: 2px solid #f28c28;
+.content-box {
+    background-color: #292035;
+    padding: 20px;
+    margin: 20px 0;
+    border: 2px solid #ff8c00;
+    border-radius: 12px;
 }
 
-/* Link styling */
+ul {
+    padding: 20px 35px;
+    margin: 15px 0;
+    background-color: #241d30;
+    border: 2px solid #f97316;
+    border-radius: 8px;
+}
+
+h2 {
+    color: #c084fc;
+}
+
 a {
-    color: #123c69;
+    color: #ffad33;
     font-weight: bold;
 }
 
 a:hover {
-    color: #f28c28;
+    color: #c084fc;
 }
-
