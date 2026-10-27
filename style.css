@@ -1,11 +1,14 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600;700&display=swap');
 /* Basic page styling */
 * {
     box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
+    h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+}
     background-color: #f0f4f8;
     color: #243447;
     margin: 0;
@@ -144,3 +147,16 @@ footer {
         padding: 12px;
     }
 }
+/* Responsive layout for content sections */
+.content-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+@media (max-width: 768px) {
+    .content-container {
+        grid-template-columns: 1fr;
+    }
+}
+
