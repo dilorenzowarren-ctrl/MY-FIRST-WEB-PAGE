@@ -4,46 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Me</title>
+    <meta name="description" content="Learn more about me and how to contact me.">
+    <title>About | My Personal Website</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1 id="main-title">🎃 About Me 👻</h1>
+    <header>
+        <h1 id="main-title">About Me</h1>
+        <div class="content-box">
+            <p>A little more about me, my interests, and what I am learning.</p>
+        </div>
+    </header>
 
-    <nav>
-        <a href="index.html">Home</a> |
-        <a href="about.html">About</a> |
-        <a href="projects.html">Projects</a>
+    <nav aria-label="Main navigation">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="about.html" aria-current="page">About / Contact</a></li>
+        </ul>
     </nav>
 
-    <div class="content-box">
-        <h2>Welcome!</h2>
-        <p>
-            Welcome to my personal webpage! This page is a little
-            introduction to me and my interests.
-        </p>
-    </div>
+    <main>
+        <section id="about">
+            <h2>About Me</h2>
+            <p>
+                I created this website as part of my web development coursework.
+                I am learning how to organize information with HTML and style
+                it with CSS.
+            </p>
+            <p>
+                Outside of coursework, I enjoy video games and exploring
+                different interests. I look forward to building on what
+                I learn and improving my skills.
+            </p>
+        </section>
 
-    <div class="content-box">
-        <h2>My Interests</h2>
-        <p>
-            I enjoy learning about technology and exploring how
-            websites are created using HTML and CSS.
-        </p>
-    </div>
-
-    <div class="content-box">
-        <h2>My Learning Journey</h2>
-        <p>
-            I am learning how to organize webpage content,
-            create links between pages, and use CSS to add
-            colors, borders, spacing, and personal style.
-        </p>
-    </div>
+        <section id="contact">
+            <h2>Contact</h2>
+            <p>
+                Thanks for visiting my website!
+            </p>
+        </section>
+    </main>
 
     <footer>
-        <p>🕸️ Thanks for visiting! Have a spooky Halloween! 🎃</p>
+        <p>Created as part of my web development coursework.</p>
     </footer>
 
 </body>
