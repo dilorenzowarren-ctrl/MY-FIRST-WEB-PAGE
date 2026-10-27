@@ -4,48 +4,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Projects</title>
+    <meta name="description" content="Projects and coursework on my personal website.">
+    <title>Projects | My Personal Website</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1 id="main-title">🎃 My Projects 👻</h1>
+    <header>
+        <h1 id="main-title">My Projects</h1>
+        <div class="content-box">
+            <p>Here are some of the things I have worked on and learned.</p>
+        </div>
+    </header>
 
-    <nav>
-        <a href="index.html">Home</a> |
-        <a href="about.html">About</a> |
-        <a href="projects.html">Projects</a>
+    <nav aria-label="Main navigation">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html" aria-current="page">Projects</a></li>
+            <li><a href="about.html">About / Contact</a></li>
+        </ul>
     </nav>
 
-    <div class="content-box">
-        <h2>My Web Design Project</h2>
-        <p>
-            This website is part of my HTML and CSS coursework.
-            I am learning how to create webpages and style them
-            using a separate CSS file.
-        </p>
-    </div>
+    <main>
+        <section id="projects">
+            <h2>My Web Development Work</h2>
+            <p>
+                I am learning how websites are built using HTML and CSS.
+                This website is part of that learning process.
+            </p>
+        </section>
 
-    <div class="content-box">
-        <h2>What I Learned</h2>
-        <p>
-            I learned how to use HTML headings, paragraphs, links,
-            and navigation. I also learned how CSS selectors,
-            colors, margins, padding, and borders can improve
-            the appearance of a webpage.
-        </p>
-    </div>
+        <section id="learning">
+            <h2>What I Have Been Learning</h2>
+            <ul>
+                <li>Building a webpage with HTML.</li>
+                <li>Using headings, paragraphs, links, and images.</li>
+                <li>Styling pages with CSS.</li>
+                <li>Organizing content into sections.</li>
+                <li>Making pages responsive for different screen sizes.</li>
+            </ul>
+        </section>
 
-    <div class="content-box">
-        <h2>My Goals</h2>
-        <p>
-            My goal is to continue learning web design and build
-            more creative and organized websites.
-        </p>
-    </div>
+        <section id="next-steps">
+            <h2>What's Next</h2>
+            <p>
+                I plan to keep practicing and improve my ability to create
+                websites that are clear, organized, and easy to use on
+                computers, tablets, and phones.
+            </p>
+        </section>
+    </main>
 
     <footer>
-        <p>🕸️ Happy Halloween! Thanks for visiting my projects page. 🎃</p>
+        <p>Created as part of my web development coursework.</p>
     </footer>
 
 </body>
