@@ -259,3 +259,72 @@ select:focus-visible {
 html {
     scroll-behavior: smooth;
 }
+
+/* Accessible Contact Form */
+form {
+    max-width: 650px;
+    margin: 20px auto;
+}
+
+fieldset {
+    border: 2px solid #493267;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+legend {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    color: #493267;
+    padding: 0 8px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #243447;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #526171;
+    border-radius: 4px;
+    font: inherit;
+    color: #243447;
+    background-color: #ffffff;
+}
+
+.form-group small {
+    margin-top: 6px;
+    color: #243447;
+}
+
+form button {
+    padding: 12px 24px;
+    background-color: #302044;
+    color: #ffffff;
+    border: 2px solid #302044;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #493267;
+}
+
+form input:focus,
+form textarea:focus {
+    outline: 3px solid #111111;
+    outline-offset: 3px;
+}
