@@ -226,23 +226,36 @@ footer p {
     .content-box {
         padding: 16px;
     }
-}/* Accessibility: Skip link */
+
+/* Accessibility: Skip link */
 .skip-link {
     position: absolute;
-    top: -40px;
+    top: -50px;
     left: 10px;
     background: #ffffff;
-    color: #000000;
-    padding: 10px;
+    color: #243447;
+    padding: 12px 16px;
     z-index: 1000;
+    border: 2px solid #243447;
+    border-radius: 4px;
+    font-weight: 700;
 }
 
 .skip-link:focus {
     top: 10px;
 }
 
-/* Accessibility: Keyboard focus */
-a:focus-visible {
-    outline: 3px solid #ff8c00;
+/* Accessibility: Visible keyboard focus */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 3px solid #111111;
     outline-offset: 4px;
+}
+
+/* Accessibility: Smooth navigation */
+html {
+    scroll-behavior: smooth;
 }
