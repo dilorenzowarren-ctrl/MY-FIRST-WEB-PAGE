@@ -48,9 +48,67 @@
         Thanks for visiting my website! 
         If you would like to get in touch, please use the form below.
     </p>
-<form id="contact-form" novalidate></form>
+<form id="contact-form" novalidate>
     
-<script>
+
+
+    
+
+
+
+        <fieldset>
+            <legend>Your Contact Information</legend>
+
+            <div class="form-group">
+                <label for="name">Full Name (required)</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    autocomplete="name"
+                    required
+                    aria-describedby="name-help"
+                >
+                <small id="name-help">Please enter your full name.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address (required)</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    autocomplete="email"
+                    required
+                    aria-describedby="email-help"
+                >
+                <small id="email-help">
+                    Please enter a valid email address.
+                </small>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Your Message</legend>
+
+            <div class="form-group">
+                <label for="message">Message (required)</label>
+                <textarea
+                    id="message"
+                    name="message"
+                    rows="5"
+                    required
+                    aria-describedby="message-error"
+                ></textarea>
+                <span class="field-error" id="message-error"
+      aria-live="polite"></span>
+            </div>
+        </fieldset>
+
+        <button type="submit">Send Message</button>
+
+    </form>
+    <script>
 const contactForm = document.getElementById("contact-form");
 
 contactForm.addEventListener("submit", function(event) {
@@ -99,64 +157,6 @@ contactForm.addEventListener("submit", function(event) {
     contactForm.reset();
 });
 </script>
-
-    
-
-
-
-        <fieldset>
-            <legend>Your Contact Information</legend>
-
-            <div class="form-group">
-                <label for="name">Full Name (required)</label>
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    autocomplete="name"
-                    required
-                    aria-describedby="name-help"
-                >
-                <small id="name-help">Please enter your full name.</small>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email Address (required)</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    autocomplete="email"
-                    required
-                    aria-describedby="email-help"
-                >
-                <small id="email-help">
-                    Please enter a valid email address.
-                </small>
-            </div>
-        </fieldset>
-
-        <fieldset>
-            <legend>Your Message</legend>
-
-            <div class="form-group">
-                <label for="message">Message (required)</label>
-                <textarea
-                    id="message"
-                    name="message"
-                    rows="5"
-                    required
-                    aria-describedby="message-help"
-                ></textarea>
-                <small id="message-help">
-                    Please enter a message before submitting.
-                </small>
-            </div>
-        </fieldset>
-
-        <button type="submit">Send Message</button>
-
-    </form>
 </section>
 
     </main>
