@@ -71,8 +71,12 @@
                         required
                         aria-describedby="name-error"
                     >
-                    <span id="name-error" class="field-error"
-                          aria-live="polite"></span>
+                    <span
+                        id="name-error"
+                        class="field-error"
+                        style="color: #b00000 !important; display: block; font-weight: bold;"
+                        aria-live="polite"
+                    ></span>
                 </div>
 
                 <div class="form-group">
@@ -85,8 +89,12 @@
                         required
                         aria-describedby="email-error"
                     >
-                    <span id="email-error" class="field-error"
-                          aria-live="polite"></span>
+                    <span
+                        id="email-error"
+                        class="field-error"
+                        style="color: #b00000 !important; display: block; font-weight: bold;"
+                        aria-live="polite"
+                    ></span>
                 </div>
 
                 <div class="form-group">
@@ -98,8 +106,12 @@
                         required
                         aria-describedby="subject-error"
                     >
-                    <span id="subject-error" class="field-error"
-                          aria-live="polite"></span>
+                    <span
+                        id="subject-error"
+                        class="field-error"
+                        style="color: #b00000 !important; display: block; font-weight: bold;"
+                        aria-live="polite"
+                    ></span>
                 </div>
 
             </fieldset>
@@ -116,8 +128,12 @@
                         required
                         aria-describedby="message-error"
                     ></textarea>
-                    <span id="message-error" class="field-error"
-                          aria-live="polite"></span>
+                    <span
+                        id="message-error"
+                        class="field-error"
+                        style="color: #b00000 !important; display: block; font-weight: bold;"
+                        aria-live="polite"
+                    ></span>
                 </div>
 
             </fieldset>
@@ -167,9 +183,11 @@ document.addEventListener("DOMContentLoaded", function () {
         ];
 
         let firstInvalidField = null;
+
         const status = document.getElementById("form-status");
 
         fields.forEach(function (field) {
+
             const input = document.getElementById(field.id);
             const error = document.getElementById(field.id + "-error");
 
@@ -195,6 +213,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 input.setAttribute("aria-invalid", "false");
             }
+
         });
 
         if (firstInvalidField !== null) {
@@ -214,6 +233,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 "false"
             );
         });
+
     });
 
 });
