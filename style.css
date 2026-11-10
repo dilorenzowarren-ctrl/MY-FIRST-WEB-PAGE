@@ -328,3 +328,15 @@ form textarea:focus {
     outline: 3px solid #111111;
     outline-offset: 3px;
 }
+/* Accessible form error messages */
+.field-error {
+    display: block;
+    color: #b00020;
+    font-weight: 700;
+    margin-top: 5px;
+}
+
+input[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+    border: 2px solid #b00020;
+}
