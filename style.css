@@ -1,196 +1,243 @@
 
-/* General page styling */
-* {
-    box-sizing: border-box;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn more about me and how to contact me.">
+    <title>About | My Personal Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f0f4f8;
-    color: #24563B;
-    line-height: 1.6;
-}
+<body>
 
-header {
-    background-color: #24563B;
-    color: white;
-    text-align: center;
-    padding: 30px 20px;
-}
+<a class="skip-link" href="#main-content">
+    Skip to main content
+</a>
 
-header h1 {
-    margin-top: 0;
-}
+<header>
+    <h1 id="main-title">About Me</h1>
+    <div class="content-box">
+        <p>A little more about me, my interests, and what I am learning.</p>
+    </div>
+</header>
 
-.content-box {
-    max-width: 800px;
-    margin: 0 auto;
-}
+<nav aria-label="Main navigation">
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="about.html" aria-current="page">About / Contact</a></li>
+    </ul>
+</nav>
 
-nav {
-    background-color: #302044;
-    padding: 12px;
-}
+<main id="main-content">
 
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 25px;
-    margin: 0;
-    padding: 0;
-}
+    <section id="about">
+        <h2>About Me</h2>
 
-nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
+        <p>
+            I created this website as part of my web development coursework.
+            I am learning how to organize information with HTML and style
+            it with CSS.
+        </p>
 
-nav a:hover,
-nav a:focus {
-    text-decoration: underline;
-}
+        <p>
+            Outside of coursework, I enjoy video games and exploring
+            different interests. I look forward to building on what
+            I learn and improving my skills.
+        </p>
+    </section>
 
-main {
-    max-width: 1000px;
-    margin: 30px auto;
-    padding: 20px;
-}
+    <section id="contact">
+        <h2>Contact Me</h2>
 
-section {
-    background-color: white;
-    padding: 25px;
-    margin-bottom: 25px;
-    border-radius: 8px;
-}
+        <p>
+            Thanks for visiting my website!
+            If you would like to get in touch, please use the form below.
+        </p>
 
-h2,
-h3 {
-    color: #493267;
-}
+        <form id="contact-form" novalidate>
 
-a {
-    color: #24563B;
-}
+            <fieldset>
+                <legend>Your Contact Information</legend>
 
-a:focus,
-button:focus,
-input:focus,
-textarea:focus {
-    outline: 3px solid #e9a23b;
-    outline-offset: 3px;
-}
+                <div class="form-group">
+                    <label for="name">Full Name (required)</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        autocomplete="name"
+                        required
+                        aria-describedby="name-error"
+                    >
+                    <span
+                        id="name-error"
+                        class="field-error"
+                        style="color: #b00000 !important; display: block; font-weight: bold;"
+                        aria-live="polite"
+                    ></span>
+                </div>
 
-.skip-link {
-    position: absolute;
-    left: -9999px;
-    top: 10px;
-    background-color: white;
-    color: #24563B;
-    padding: 10px;
-    z-index: 100;
-}
+                <div class="form-group">
+                    <label for="email">Email Address (required)</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        autocomplete="email"
+                        required
+                        aria-describedby="email-error"
+                    >
+                    <span
+                        id="email-error"
+                        class="field-error"
+                        style="color: #b00000 !important; display: block; font-weight: bold;"
+                        aria-live="polite"
+                    ></span>
+                </div>
 
-.skip-link:focus {
-    left: 10px;
-}
+                <div class="form-group">
+                    <label for="subject">Subject (required)</label>
+                    <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        required
+                        aria-describedby="subject-error"
+                    >
+                    <span
+                        id="subject-error"
+                        class="field-error"
+                        style="color: #b00000 !important; display: block; font-weight: bold;"
+                        aria-live="polite"
+                    ></span>
+                </div>
 
-footer {
-    background-color: #302044;
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
+            </fieldset>
 
-/* Contact form styling */
-form {
-    margin-top: 20px;
-}
+            <fieldset>
+                <legend>Your Message</legend>
 
-fieldset {
-    border: 1px solid #493267;
-    border-radius: 6px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
+                <div class="form-group">
+                    <label for="message">Message (required)</label>
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="5"
+                        required
+                        aria-describedby="message-error"
+                    ></textarea>
+                    <span
+                        id="message-error"
+                        class="field-error"
+                        style="color: #b00000 !important; display: block; font-weight: bold;"
+                        aria-live="polite"
+                    ></span>
+                </div>
 
-legend {
-    color: #493267;
-    font-weight: bold;
-    padding: 0 8px;
-}
+            </fieldset>
 
-.form-group {
-    margin-bottom: 18px;
-}
+            <button type="submit">Send Message</button>
 
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 6px;
-}
+            <p id="form-status" role="status" aria-live="polite"></p>
 
-input,
-textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #555;
-    border-radius: 4px;
-    font: inherit;
-}
+        </form>
+    </section>
 
-textarea {
-    resize: vertical;
-}
+</main>
 
-button {
-    background-color: #24563B;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 12px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
+<footer>
+    <p>Created as part of my web development coursework.</p>
+</footer>
 
-button:hover {
-    background-color: #193d29;
-}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-/* Accessible contact form error messages */
-.field-error {
-    display: block;
-    color: #b00020;
-    font-weight: 700;
-    margin-top: 5px;
-}
+    const contactForm = document.getElementById("contact-form");
 
-input[aria-invalid="true"],
-textarea[aria-invalid="true"] {
-    border: 2px solid #b00020;
-}
-
-#form-status {
-    font-weight: bold;
-    margin-top: 15px;
-}
-
-/* Responsive layout */
-@media (max-width: 600px) {
-    main {
-        padding: 12px;
+    if (!contactForm) {
+        return;
     }
 
-    section {
-        padding: 18px;
-    }
+    contactForm.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    nav ul {
-        gap: 15px;
-    }
-}
+        const fields = [
+            {
+                id: "name",
+                message: "Please enter your full name."
+            },
+            {
+                id: "email",
+                message: "Please enter a valid email address."
+            },
+            {
+                id: "subject",
+                message: "Please enter a subject."
+            },
+            {
+                id: "message",
+                message: "Please enter a message."
+            }
+        ];
+
+        let firstInvalidField = null;
+
+        const status = document.getElementById("form-status");
+
+        fields.forEach(function (field) {
+
+            const input = document.getElementById(field.id);
+            const error = document.getElementById(field.id + "-error");
+
+            let errorMessage = "";
+
+            if (input.value.trim() === "") {
+                errorMessage = field.message;
+            } else if (
+                field.id === "email" &&
+                !input.validity.valid
+            ) {
+                errorMessage = field.message;
+            }
+
+            error.textContent = errorMessage;
+
+            if (errorMessage !== "") {
+                input.setAttribute("aria-invalid", "true");
+
+                if (firstInvalidField === null) {
+                    firstInvalidField = input;
+                }
+            } else {
+                input.setAttribute("aria-invalid", "false");
+            }
+
+        });
+
+        if (firstInvalidField !== null) {
+            status.textContent = "Please correct the errors above.";
+            firstInvalidField.focus();
+            return;
+        }
+
+        status.textContent =
+            "Thank you! This is a demonstration form and does not send actual messages.";
+
+        contactForm.reset();
+
+        fields.forEach(function (field) {
+            document.getElementById(field.id).setAttribute(
+                "aria-invalid",
+                "false"
+            );
+        });
+
+    });
+
+});
+</script>
+
+</body>
+</html>
