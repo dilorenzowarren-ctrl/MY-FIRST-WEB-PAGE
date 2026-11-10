@@ -48,17 +48,61 @@
         Thanks for visiting my website! 
         If you would like to get in touch, please use the form below.
     </p>
-
-    <form id="contact-form"><p id="form-status" role="status" aria-live="polite"></p>
-
+<form id="contact-form" novalidate></form>
+    
 <script>
-document.getElementById("contact-form").addEventListener("submit", function(event) {
+const contactForm = document.getElementById("contact-form");
+
+contactForm.addEventListener("submit", function(event) {
     event.preventDefault();
 
-    document.getElementById("form-status").textContent =
-        "Your form passed validation. This demonstration form does not send messages.";
+    const fields = [
+        { id: "name", message: "Please enter your full name." },
+        { id: "email", message: "Please enter a valid email address." },
+        { id: "subject", message: "Please enter a subject." },
+        { id: "message", message: "Please enter a message." }
+    ];
+
+    let valid = true;
+
+    fields.forEach(function(field) {
+        const input = document.getElementById(field.id);
+        const error = document.getElementById(field.id + "-error");
+
+        let errorMessage = "";
+
+        if (input.value.trim() === "") {
+            errorMessage = field.message;
+        } else if (field.id === "email" && !input.validity.valid) {
+            errorMessage = field.message;
+        }
+
+        error.textContent = errorMessage;
+        input.setAttribute("aria-invalid", errorMessage ? "true" : "false");
+
+        if (errorMessage) {
+            valid = false;
+        }
+    });
+
+    const status = document.getElementById("form-status");
+
+    if (!valid) {
+        status.textContent = "Please correct the errors above.";
+        contactForm.querySelector('[aria-invalid="true"]').focus();
+        return;
+    }
+
+    status.textContent =
+        "Thank you! This demonstration form does not send actual messages.";
+
+    contactForm.reset();
 });
 </script>
+
+    
+
+
 
         <fieldset>
             <legend>Your Contact Information</legend>
