@@ -69,7 +69,7 @@
                     required
                     aria-describedby="name-help"
                 >
-                <small id="name-help">Please enter your full name.</small>
+                <span class="field-error" id="name-error" aria-live="polite"></span>
             </div>
 
             <div class="form-group">
@@ -80,12 +80,18 @@
                     name="email"
                     autocomplete="email"
                     required
-                    aria-describedby="email-help"
+                    aria-describedby="email-error"
                 >
-                <small id="email-help">
-                    Please enter a valid email address.
-                </small>
+               <span class="field-error" id="email-error"
+      aria-live="polite"></span>
             </div>
+        <div class="form-group">
+    <label for="subject">Subject</label>
+    <input type="text" id="subject" name="subject" required
+           aria-describedby="subject-error">
+    <span class="field-error" id="subject-error"
+          aria-live="polite"></span>
+</div>
         </fieldset>
 
         <fieldset>
@@ -106,9 +112,9 @@
         </fieldset>
 
         <button type="submit">Send Message</button>
-
-    </form>
-    <script>
+  <p id="form-status" role="status" aria-live="polite"></p>  
+ </form>
+ <script>
 const contactForm = document.getElementById("contact-form");
 
 contactForm.addEventListener("submit", function(event) {
