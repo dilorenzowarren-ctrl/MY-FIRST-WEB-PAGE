@@ -9,167 +9,182 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <a class="skip-link" href="#main-content">
     Skip to main content
 </a>
-    <header>
-        <h1 id="main-title">About Me</h1>
-        <div class="content-box">
-            <p>A little more about me, my interests, and what I am learning.</p>
-        </div>
-    </header>
 
-    <nav aria-label="Main navigation">
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="about.html" aria-current="page">About / Contact</a></li>
-        </ul>
-    </nav>
+<header>
+    <h1 id="main-title">About Me</h1>
+    <div class="content-box">
+        <p>A little more about me, my interests, and what I am learning.</p>
+    </div>
+</header>
 
-    <main id="main-content">
-        <section id="about">
-            <h2>About Me</h2>
-            <p>
-                I created this website as part of my web development coursework.
-                I am learning how to organize information with HTML and style
-                it with CSS.
-            </p>
-            <p>
-                Outside of coursework, I enjoy video games and exploring
-                different interests. I look forward to building on what
-                I learn and improving my skills.
-            </p>
- 
-<section id="contact">
-    <h2>Contact Me</h2>
+<nav aria-label="Main navigation">
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="about.html" aria-current="page">About / Contact</a></li>
+    </ul>
+</nav>
 
-    <p>
-        Thanks for visiting my website! 
-        If you would like to get in touch, please use the form below.
-    </p>
-<form id="contact-form" novalidate>
-    
+<main id="main-content">
 
+    <section id="about">
+        <h2>About Me</h2>
+        <p>
+            I created this website as part of my web development coursework.
+            I am learning how to organize information with HTML and style
+            it with CSS.
+        </p>
+        <p>
+            Outside of coursework, I enjoy video games and exploring
+            different interests. I look forward to building on what
+            I learn and improving my skills.
+        </p>
+    </section>
 
-    
+    <section id="contact">
+        <h2>Contact Me</h2>
 
+        <p>
+            Thanks for visiting my website!
+            If you would like to get in touch, please use the form below.
+        </p>
 
+        <form id="contact-form" novalidate>
 
-        <fieldset>
-            <legend>Your Contact Information</legend>
+            <fieldset>
+                <legend>Your Contact Information</legend>
 
-            <div class="form-group">
-                <label for="name">Full Name (required)</label>
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    autocomplete="name"
-                    required
-                    aria-describedby="name-help"
-                >
-                <span class="field-error" id="name-error" aria-live="polite"></span>
-            </div>
+                <div class="form-group">
+                    <label for="name">Full Name (required)</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        autocomplete="name"
+                        required
+                        aria-describedby="name-error"
+                    >
+                    <span class="field-error" id="name-error"
+                          aria-live="polite"></span>
+                </div>
 
-            <div class="form-group">
-                <label for="email">Email Address (required)</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    autocomplete="email"
-                    required
-                    aria-describedby="email-error"
-                >
-               <span class="field-error" id="email-error"
-      aria-live="polite"></span>
-            </div>
-        <div class="form-group">
-    <label for="subject">Subject</label>
-    <input type="text" id="subject" name="subject" required
-           aria-describedby="subject-error">
-    <span class="field-error" id="subject-error"
-          aria-live="polite"></span>
-</div>
-        </fieldset>
+                <div class="form-group">
+                    <label for="email">Email Address (required)</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        autocomplete="email"
+                        required
+                        aria-describedby="email-error"
+                    >
+                    <span class="field-error" id="email-error"
+                          aria-live="polite"></span>
+                </div>
 
-        <fieldset>
-            <legend>Your Message</legend>
+                <div class="form-group">
+                    <label for="subject">Subject (required)</label>
+                    <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        required
+                        aria-describedby="subject-error"
+                    >
+                    <span class="field-error" id="subject-error"
+                          aria-live="polite"></span>
+                </div>
 
-            <div class="form-group">
-                <label for="message">Message (required)</label>
-                <textarea
-                    id="message"
-                    name="message"
-                    rows="5"
-                    required
-                    aria-describedby="message-error"
-                ></textarea>
-                <span class="field-error" id="message-error"
-      aria-live="polite"></span>
-            </div>
-        </fieldset>
+            </fieldset>
 
-        <button type="submit">Send Message</button>
-  <p id="form-status" role="status" aria-live="polite"></p>  
- </form>
- <script>
-const contactForm = document.getElementById("contact-form");
+            <fieldset>
+                <legend>Your Message</legend>
 
-contactForm.addEventListener("submit", function(event) {
-    event.preventDefault();
+                <div class="form-group">
+                    <label for="message">Message (required)</label>
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="5"
+                        required
+                        aria-describedby="message-error"
+                    ></textarea>
+                    <span class="field-error" id="message-error"
+                          aria-live="polite"></span>
+                </div>
 
-    const fields = [
-        { id: "name", message: "Please enter your full name." },
-        { id: "email", message: "Please enter a valid email address." },
-        { id: "subject", message: "Please enter a subject." },
-        { id: "message", message: "Please enter a message." }
-    ];
+            </fieldset>
 
-    let valid = true;
+            <button type="submit">Send Message</button>
 
-    fields.forEach(function(field) {
-        const input = document.getElementById(field.id);
-        const error = document.getElementById(field.id + "-error");
+            <p id="form-status" role="status" aria-live="polite"></p>
 
-        let errorMessage = "";
+        </form>
 
-        if (input.value.trim() === "") {
-            errorMessage = field.message;
-        } else if (field.id === "email" && !input.validity.valid) {
-            errorMessage = field.message;
-        }
+        <script>
+            const contactForm = document.getElementById("contact-form");
 
-        error.textContent = errorMessage;
-        input.setAttribute("aria-invalid", errorMessage ? "true" : "false");
+            contactForm.addEventListener("submit", function(event) {
+                event.preventDefault();
 
-        if (errorMessage) {
-            valid = false;
-        }
-    });
+                const fields = [
+                    { id: "name", message: "Please enter your full name." },
+                    { id: "email", message: "Please enter a valid email address." },
+                    { id: "subject", message: "Please enter a subject." },
+                    { id: "message", message: "Please enter a message." }
+                ];
 
-    const status = document.getElementById("form-status");
+                let valid = true;
 
-    if (!valid) {
-        status.textContent = "Please correct the errors above.";
-        contactForm.querySelector('[aria-invalid="true"]').focus();
-        return;
-    }
+                fields.forEach(function(field) {
+                    const input = document.getElementById(field.id);
+                    const error = document.getElementById(field.id + "-error");
 
-    status.textContent =
-        "Thank you! This demonstration form does not send actual messages.";
+                    let errorMessage = "";
 
-    contactForm.reset();
-});
-</script>
-</section>
+                    if (input.value.trim() === "") {
+                        errorMessage = field.message;
+                    } else if (field.id === "email" && !input.validity.valid) {
+                        errorMessage = field.message;
+                    }
 
-    </main>
+                    error.textContent = errorMessage;
+                    input.setAttribute(
+                        "aria-invalid",
+                        errorMessage ? "true" : "false"
+                    );
 
-    <footer>
-        <p>Created as part of my web development coursework.</p>
-    </footer>
+                    if (errorMessage) {
+                        valid = false;
+                    }
+                });
+
+                const status = document.getElementById("form-status");
+
+                if (!valid) {
+                    status.textContent = "Please correct the errors above.";
+                    contactForm.querySelector('[aria-invalid="true"]').focus();
+                    return;
+                }
+
+                status.textContent =
+                    "Thank you! This demonstration form does not send actual messages.";
+
+                contactForm.reset();
+            });
+        </script>
+
+    </section>
+
+</main>
+
+<footer>
+    <p>Created as part of my web development coursework.</p>
+</footer>
 
 </body>
 </html>
