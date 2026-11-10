@@ -49,7 +49,16 @@
         If you would like to get in touch, please use the form below.
     </p>
 
-    <form action="#" method="post">
+    <form id="contact-form"><p id="form-status" role="status" aria-live="polite"></p>
+
+<script>
+document.getElementById("contact-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    document.getElementById("form-status").textContent =
+        "Your form passed validation. This demonstration form does not send messages.";
+});
+</script>
 
         <fieldset>
             <legend>Your Contact Information</legend>
