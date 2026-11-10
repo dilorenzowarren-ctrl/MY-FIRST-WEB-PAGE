@@ -8,6 +8,7 @@
     <title>About | My Personal Website</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <a class="skip-link" href="#main-content">
@@ -33,11 +34,13 @@
 
     <section id="about">
         <h2>About Me</h2>
+
         <p>
             I created this website as part of my web development coursework.
             I am learning how to organize information with HTML and style
             it with CSS.
         </p>
+
         <p>
             Outside of coursework, I enjoy video games and exploring
             different interests. I look forward to building on what
@@ -68,7 +71,7 @@
                         required
                         aria-describedby="name-error"
                     >
-                    <span class="field-error" id="name-error"
+                    <span id="name-error" class="field-error"
                           aria-live="polite"></span>
                 </div>
 
@@ -82,7 +85,7 @@
                         required
                         aria-describedby="email-error"
                     >
-                    <span class="field-error" id="email-error"
+                    <span id="email-error" class="field-error"
                           aria-live="polite"></span>
                 </div>
 
@@ -95,7 +98,7 @@
                         required
                         aria-describedby="subject-error"
                     >
-                    <span class="field-error" id="subject-error"
+                    <span id="subject-error" class="field-error"
                           aria-live="polite"></span>
                 </div>
 
@@ -113,7 +116,7 @@
                         required
                         aria-describedby="message-error"
                     ></textarea>
-                    <span class="field-error" id="message-error"
+                    <span id="message-error" class="field-error"
                           aria-live="polite"></span>
                 </div>
 
@@ -124,60 +127,6 @@
             <p id="form-status" role="status" aria-live="polite"></p>
 
         </form>
-
-        <script>
-            const contactForm = document.getElementById("contact-form");
-
-            contactForm.addEventListener("submit", function(event) {
-                event.preventDefault();
-
-                const fields = [
-                    { id: "name", message: "Please enter your full name." },
-                    { id: "email", message: "Please enter a valid email address." },
-                    { id: "subject", message: "Please enter a subject." },
-                    { id: "message", message: "Please enter a message." }
-                ];
-
-                let valid = true;
-
-                fields.forEach(function(field) {
-                    const input = document.getElementById(field.id);
-                    const error = document.getElementById(field.id + "-error");
-
-                    let errorMessage = "";
-
-                    if (input.value.trim() === "") {
-                        errorMessage = field.message;
-                    } else if (field.id === "email" && !input.validity.valid) {
-                        errorMessage = field.message;
-                    }
-
-                    error.textContent = errorMessage;
-                    input.setAttribute(
-                        "aria-invalid",
-                        errorMessage ? "true" : "false"
-                    );
-
-                    if (errorMessage) {
-                        valid = false;
-                    }
-                });
-
-                const status = document.getElementById("form-status");
-
-                if (!valid) {
-                    status.textContent = "Please correct the errors above.";
-                    contactForm.querySelector('[aria-invalid="true"]').focus();
-                    return;
-                }
-
-                status.textContent =
-                    "Thank you! This demonstration form does not send actual messages.";
-
-                contactForm.reset();
-            });
-        </script>
-
     </section>
 
 </main>
@@ -185,6 +134,90 @@
 <footer>
     <p>Created as part of my web development coursework.</p>
 </footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const contactForm = document.getElementById("contact-form");
+
+    if (!contactForm) {
+        return;
+    }
+
+    contactForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const fields = [
+            {
+                id: "name",
+                message: "Please enter your full name."
+            },
+            {
+                id: "email",
+                message: "Please enter a valid email address."
+            },
+            {
+                id: "subject",
+                message: "Please enter a subject."
+            },
+            {
+                id: "message",
+                message: "Please enter a message."
+            }
+        ];
+
+        let firstInvalidField = null;
+        const status = document.getElementById("form-status");
+
+        fields.forEach(function (field) {
+            const input = document.getElementById(field.id);
+            const error = document.getElementById(field.id + "-error");
+
+            let errorMessage = "";
+
+            if (input.value.trim() === "") {
+                errorMessage = field.message;
+            } else if (
+                field.id === "email" &&
+                !input.validity.valid
+            ) {
+                errorMessage = field.message;
+            }
+
+            error.textContent = errorMessage;
+
+            if (errorMessage !== "") {
+                input.setAttribute("aria-invalid", "true");
+
+                if (firstInvalidField === null) {
+                    firstInvalidField = input;
+                }
+            } else {
+                input.setAttribute("aria-invalid", "false");
+            }
+        });
+
+        if (firstInvalidField !== null) {
+            status.textContent = "Please correct the errors above.";
+            firstInvalidField.focus();
+            return;
+        }
+
+        status.textContent =
+            "Thank you! This is a demonstration form and does not send actual messages.";
+
+        contactForm.reset();
+
+        fields.forEach(function (field) {
+            document.getElementById(field.id).setAttribute(
+                "aria-invalid",
+                "false"
+            );
+        });
+    });
+
+});
+</script>
 
 </body>
 </html>
