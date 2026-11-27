@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             try {
                 const response = await fetch(
-                    "https://dog.ceo/api/breeds/image/random",
+                    "https://dogapi.dog/api/v2/breeds/image",
                     { signal: controller.signal }
                 );
 
