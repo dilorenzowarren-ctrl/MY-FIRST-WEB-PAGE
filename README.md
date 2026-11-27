@@ -1,3 +1,25 @@
+# My Personal Website
+
+## Live Website
+[Visit My Personal Website](https://dilorenzowarren-ctrl.github.io/MY-FIRST-WEB-PAGE/)
+
+## Project Overview
+This project is a personal website created as part of my web development coursework. It includes three pages: Home, Projects, and About Me. The website demonstrates my understanding of HTML, CSS, JavaScript, accessibility, and responsive web design.
+
+## Technologies Used
+- HTML5
+- CSS3
+- JavaScript
+- GitHub Pages
+
+## Website Features
+- Three connected pages with consistent navigation.
+- Shared stylesheet for a consistent design.
+- Responsive mobile navigation menu.
+- Contact form with JavaScript validation.
+- Required fields and email format validation.
+- Keyboard-accessible navigation and visible focus indicators.
+
 ## Accessibility and Design Improvements
 
 ### Accessibility Testing
@@ -20,3 +42,15 @@ I used contrasting text and background colors to improve readability and meet WC
 
 ### Consistent Design
 I maintained a consistent color palette and typography throughout the Home, Projects, and About pages.
+
+## JavaScript Interactions
+1. **Mobile Navigation:** A menu button allows visitors to open and close the navigation menu on smaller screens.
+2. **Contact Form Validation:** JavaScript checks required fields and validates the email address before displaying a success message.
+
+## Project Pages
+- Home (`index.html`)
+- Projects (`projects.html`)
+- About Me / Contact (`about.html`)
+
+## Author
+Created as part of my web development coursework.
