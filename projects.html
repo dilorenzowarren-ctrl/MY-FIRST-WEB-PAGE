@@ -1,64 +1,129 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <meta name="description" content="Projects and coursework on my personal website.">
+
     <title>Projects | My Personal Website</title>
+
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
+
 <body>
-<a class="skip-link" href="#main-content">
-    Skip to main content
-</a>
+
+    <a class="skip-link" href="#main-content">
+        Skip to main content
+    </a>
+
     <header>
-        <h1 id="main-title">My Projects</h1>
         <div class="content-box">
-            <p>Here are some of the things I have worked on and learned.</p>
+            <h1 id="main-title">My Projects</h1>
+
+            <p>
+                Here are some of the things I have worked on
+                and learned.
+            </p>
         </div>
     </header>
 
     <nav aria-label="Main navigation">
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="projects.html" aria-current="page">Projects</a></li>
-            <li><a href="about.html">About / Contact</a></li>
+
+        <button
+            type="button"
+            id="menu-toggle"
+            aria-expanded="false"
+            aria-controls="nav-list">
+            Menu
+        </button>
+
+        <ul id="nav-list">
+
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+
+            <li>
+                <a href="projects.html" aria-current="page">Projects</a>
+            </li>
+
+            <li>
+                <a href="about.html">About / Contact</a>
+            </li>
+
         </ul>
+
     </nav>
 
     <main id="main-content">
+
         <section id="projects">
+
             <h2>My Web Development Work</h2>
+
             <p>
-                I am learning how websites are built using HTML and CSS.
-                This website is part of that learning process.
+                I am learning how websites are built using
+                HTML and CSS. This website is part of that
+                learning process.
             </p>
+
         </section>
 
         <section id="learning">
+
             <h2>What I Have Been Learning</h2>
+
             <ul>
                 <li>Building a webpage with HTML.</li>
+
                 <li>Using headings, paragraphs, links, and images.</li>
+
                 <li>Styling pages with CSS.</li>
+
                 <li>Organizing content into sections.</li>
+
                 <li>Making pages responsive for different screen sizes.</li>
             </ul>
+
         </section>
 
         <section id="next-steps">
+
             <h2>What's Next</h2>
+
             <p>
-                I plan to keep practicing and improve my ability to create
-                websites that are clear, organized, and easy to use on
-                computers, tablets, and phones.
+                I plan to keep practicing and improve my ability
+                to create websites that are clear, organized,
+                and easy to use on computers, tablets, and phones.
             </p>
+
         </section>
+
+        <section id="contact-link">
+
+            <h2>Contact Me</h2>
+
+            <p>
+                Thank you for visiting my projects page!
+                If you would like to get in touch, visit
+                my About and Contact page.
+            </p>
+
+            <a href="about.html">Visit My Contact Page</a>
+
+        </section>
+
     </main>
 
     <footer>
-        <p>Created as part of my web development coursework.</p>
+        <p>
+            &copy; 2026 My Personal Website.
+            Created as part of my web development coursework.
+        </p>
     </footer>
 
 </body>
