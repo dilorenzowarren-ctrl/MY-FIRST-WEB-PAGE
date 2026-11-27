@@ -159,86 +159,57 @@
 
         <!-- WORLDWIDE WEATHER FEATURE -->
 
-        <section id="weather-section">
 
-            <h2>🌤️ Worldwide Weather</h2>
+<section id="weather-section">
+    <h2>🌤️ Worldwide Weather</h2>
+    <p>Search for the current weather in any city!</p>
 
-            <p>
-                Search for the current weather in any city around
-                the world!
-            </p>
+    <div class="weather-card">
 
-            <div class="weather-card">
+        <form id="weather-form">
+            <label for="city-search">Enter a city:</label>
 
-                <form id="weather-form">
+            <input
+                type="text"
+                id="city-search"
+                placeholder="Example: Miami, London, Tokyo"
+                value="Port St. Lucie"
+                required>
 
-                    <label for="city-search">
-                        Enter a city:
-                    </label>
+            <button type="submit" id="weather-search-button">
+                Search Weather
+            </button>
+        </form>
 
-                    <input
-                        type="text"
-                        id="city-search"
-                        placeholder="Example: Miami, London, Tokyo"
-                        value="Port St. Lucie"
-                        required>
+        <p id="weather-status" aria-live="polite">
+            Loading weather...
+        </p>
 
-                    <button
-                        type="submit"
-                        id="weather-search-button">
-                        Search Weather
-                    </button>
+        <div id="weather-details" hidden>
+            <h3 id="weather-city"></h3>
 
-                </form>
+            <p id="weather-icon" aria-hidden="true">🌤️</p>
 
+            <h3 id="weather-temperature">--°F</h3>
 
-                <p id="weather-status" aria-live="polite">
-                    Loading weather...
-                </p>
+            <p id="weather-description">Weather conditions</p>
 
+            <p id="weather-feels-like">Feels like: --°F</p>
 
-                <div id="weather-details" hidden>
+            <p id="weather-humidity">Humidity: --%</p>
 
-                    <h3 id="weather-city"></h3>
+            <p id="weather-wind">Wind: -- mph</p>
 
-                    <p id="weather-icon" aria-hidden="true">
-                        🌤️
-                    </p>
+            <p id="weather-updated"></p>
+        </div>
 
-                    <h3 id="weather-temperature">
-                        --°F
-                    </h3>
+        <button type="button" id="weather-refresh">
+            Refresh Weather
+        </button>
 
-                    <p id="weather-description">
-                        Weather conditions
-                    </p>
+    </div>
+</section>
 
-                    <p id="weather-feels-like">
-                        Feels like: --°F
-                    </p>
-
-                    <p id="weather-humidity">
-                        Humidity: --%
-                    </p>
-
-                    <p id="weather-wind">
-                        Wind: -- mph
-                    </p>
-
-                    <p id="weather-updated"></p>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    id="weather-refresh">
-                    Refresh Weather
-                </button>
-
-            </div>
-
-        </section>
 
 
     </main>
