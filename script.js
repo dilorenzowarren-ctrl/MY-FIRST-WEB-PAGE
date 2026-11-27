@@ -121,11 +121,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         async function getRandomDog() {
             dogButton.disabled = true;
+            dogImage.hidden = true;
             dogStatus.textContent = "Finding a furry friend...";
 
             try {
                 const response = await fetch(
-                    "https://dog.ceo/api/breeds/image/random"
+                    "https://dog.ceo/api/breeds/image/random",
+                    { signal: AbortSignal.timeout(15000) }
                 );
 
                 if (!response.ok) {
@@ -138,29 +140,39 @@ document.addEventListener("DOMContentLoaded", function () {
                     throw new Error("The dog image could not be found.");
                 }
 
-           dogImage.alt = "A randomly selected dog";
+                // Wait for the dog image to load before displaying it.
 
-dogImage.onload = function () {
-    dogImage.hidden = false;
-    dogStatus.textContent = "Look at this adorable dog!";
-};
+                const imageLoaded = new Promise(function (resolve, reject) {
+                    dogImage.onload = resolve;
+                    dogImage.onerror = reject;
+                });
 
-dogImage.onerror = function () {
-    dogImage.hidden = true;
-    dogStatus.textContent = "Sorry, this dog image could not load. Please try again.";
-};
+                dogImage.alt = "A randomly selected dog";
+                dogImage.src = data.message;
 
-dogImage.src = data.message;
+                await Promise.race([
+                    imageLoaded,
+                    new Promise(function (_, reject) {
+                        setTimeout(function () {
+                            reject(new Error("Image loading timed out."));
+                        }, 15000);
+                    })
+                ]);
+
+                dogImage.hidden = false;
+                dogStatus.textContent = "Look at this adorable dog!";
+
             } catch (error) {
                 dogImage.hidden = true;
-                dogStatus.textContent = "Sorry, we couldn't load a dog right now. Please try again.";
+                dogStatus.textContent =
+                    "Sorry, we couldn't load a dog right now. Please try again.";
+
             } finally {
                 dogButton.disabled = false;
             }
         }
 
         dogButton.addEventListener("click", getRandomDog);
-
     }
 
 });
