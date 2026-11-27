@@ -1,27 +1,44 @@
 
-/* General page styling */
+/* =====================================
+   MY PERSONAL WEBSITE
+   Shared stylesheet for all three pages
+   ===================================== */
+
+/* 1. Global styles */
 * {
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     background-color: #f0f4f8;
-    color: #24563B;
-    line-height: 1.6;
+    color: #263238;
+    line-height: 1.7;
 }
 
+/* 2. Header */
 header {
-    background-color: #24563B;
-    color: white;
+    background-color: #24563b;
+    color: #ffffff;
     text-align: center;
-    padding: 30px 20px;
+    padding: 45px 20px;
 }
 
 header h1 {
-    margin-top: 0;
+    margin: 0 0 10px;
+    font-size: 2.2rem;
+}
+
+header p {
+    max-width: 750px;
+    margin: 0 auto;
+    color: #ffffff;
 }
 
 .content-box {
@@ -29,129 +46,105 @@ header h1 {
     margin: 0 auto;
 }
 
+/* 3. Navigation */
 nav {
     background-color: #302044;
-    padding: 12px;
+    padding: 15px 20px;
 }
 
 nav ul {
     list-style: none;
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 25px;
+    gap: 30px;
     margin: 0;
     padding: 0;
 }
 
 nav a {
-    color: white;
+    color: #ffffff;
     text-decoration: none;
     font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 5px;
 }
 
 nav a:hover,
-nav a:focus {
+nav a[aria-current="page"] {
+    background-color: #493267;
     text-decoration: underline;
 }
 
+/* Mobile menu button */
+#menu-toggle {
+    display: none;
+    margin: 0 auto;
+}
+
+/* 4. Main content */
 main {
     max-width: 1000px;
-    margin: 30px auto;
+    margin: 35px auto;
     padding: 20px;
 }
 
 section {
-    background-color: white;
-    padding: 25px;
+    background-color: #ffffff;
+    padding: 28px;
     margin-bottom: 25px;
-    border-radius: 8px;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
 }
 
-h2,
+h2 {
+    color: #24563b;
+    margin-top: 0;
+    border-bottom: 2px solid #e1e8e3;
+    padding-bottom: 10px;
+}
+
 h3 {
     color: #493267;
 }
 
+p {
+    margin-bottom: 15px;
+}
+
+/* 5. Images */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+figure {
+    margin: 20px 0;
+}
+
+figcaption {
+    font-size: 0.9rem;
+    color: #444444;
+    margin-top: 8px;
+}
+
+/* 6. Links */
 a {
-    color: #24563B;
+    color: #24563b;
 }
 
-a:focus,
-button:focus,
-input:focus,
-textarea:focus {
-    outline: 3px solid #e9a23b;
-    outline-offset: 3px;
+a:hover {
+    text-decoration: underline;
 }
 
-.skip-link {
-    position: absolute;
-    left: -9999px;
-    top: 10px;
-    background-color: white;
-    color: #24563B;
-    padding: 10px;
-    z-index: 100;
-}
-
-.skip-link:focus {
-    left: 10px;
-}
-
-footer {
-    background-color: #302044;
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
-
-/* Contact form styling */
-form {
-    margin-top: 20px;
-}
-
-fieldset {
-    border: 1px solid #493267;
-    border-radius: 6px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-legend {
-    color: #493267;
-    font-weight: bold;
-    padding: 0 8px;
-}
-
-.form-group {
-    margin-bottom: 18px;
-}
-
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 6px;
-}
-
-input,
-textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #555;
-    border-radius: 4px;
-    font: inherit;
-}
-
-textarea {
-    resize: vertical;
-}
-
+/* 7. Buttons */
 button {
-    background-color: #24563B;
-    color: white;
+    background-color: #24563b;
+    color: #ffffff;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 12px 20px;
     font-size: 16px;
     font-weight: bold;
@@ -162,17 +155,83 @@ button:hover {
     background-color: #193d29;
 }
 
-/* Accessible contact form error messages */
+/* 8. Keyboard accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #e09b27;
+    outline-offset: 4px;
+}
+
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 10px;
+    background-color: #ffffff;
+    color: #24563b;
+    padding: 12px;
+    z-index: 100;
+}
+
+.skip-link:focus {
+    left: 10px;
+}
+
+/* 9. Contact form */
+form {
+    margin-top: 20px;
+}
+
+fieldset {
+    border: 1px solid #777777;
+    border-radius: 8px;
+    padding: 22px;
+    margin-bottom: 22px;
+}
+
+legend {
+    color: #302044;
+    font-weight: bold;
+    padding: 0 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #777777;
+    border-radius: 5px;
+    font: inherit;
+}
+
+textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+/* Form validation errors */
 .field-error {
     display: block;
     color: #b00020;
-    font-weight: 700;
+    font-weight: bold;
     margin-top: 5px;
 }
 
 input[aria-invalid="true"],
 textarea[aria-invalid="true"] {
     border: 2px solid #b00020;
+    background-color: #fff5f5;
 }
 
 #form-status {
@@ -180,17 +239,66 @@ textarea[aria-invalid="true"] {
     margin-top: 15px;
 }
 
-/* Responsive layout */
+/* 10. API information area */
+.api-card {
+    background-color: #f0f4f8;
+    border-left: 5px solid #24563b;
+    padding: 20px;
+    border-radius: 6px;
+    margin-top: 20px;
+}
+
+/* 11. Footer */
+footer {
+    background-color: #302044;
+    color: #ffffff;
+    text-align: center;
+    padding: 22px;
+    margin-top: 35px;
+}
+
+footer p {
+    color: #ffffff;
+    margin: 0;
+}
+
+/* 12. Responsive design */
 @media (max-width: 600px) {
+    header {
+        padding: 30px 15px;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
     main {
+        margin: 15px auto;
         padding: 12px;
     }
 
     section {
-        padding: 18px;
+        padding: 20px;
     }
 
     nav ul {
-        gap: 15px;
+        gap: 10px;
+    }
+
+    fieldset {
+        padding: 15px;
+    }
+
+    #menu-toggle {
+        display: block;
+    }
+
+    nav ul.mobile-hidden {
+        display: none;
+    }
+
+    nav ul.mobile-visible {
+        display: flex;
+        flex-direction: column;
     }
 }
