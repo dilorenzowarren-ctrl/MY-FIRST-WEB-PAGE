@@ -4,7 +4,7 @@
    Complete Main Stylesheet
    ========================================= */
 
-/* ---------- GLOBAL RESET ---------- */
+/* GLOBAL RESET */
 
 * {
     margin: 0;
@@ -52,8 +52,7 @@ button {
     background-color: #24563b;
     color: white;
     font-weight: bold;
-    transition: background-color 0.25s ease,
-                transform 0.2s ease;
+    transition: background-color 0.25s ease, transform 0.2s ease;
 }
 
 button:hover {
@@ -87,7 +86,7 @@ input::placeholder {
     color: #777;
 }
 
-/* ---------- ACCESSIBILITY ---------- */
+/* ACCESSIBILITY */
 
 .skip-link {
     position: absolute;
@@ -102,7 +101,7 @@ input::placeholder {
     left: 10px;
 }
 
-/* ---------- HEADER ---------- */
+/* HEADER */
 
 header {
     background: linear-gradient(135deg, #24563b, #493267);
@@ -126,7 +125,7 @@ header p {
     font-size: 1.05rem;
 }
 
-/* ---------- NAVIGATION ---------- */
+/* NAVIGATION */
 
 nav {
     background-color: #493267;
@@ -137,7 +136,11 @@ nav {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
-nav ul {
+.menu-toggle {
+    display: none;
+}
+
+.nav-links {
     list-style: none;
     display: flex;
     justify-content: center;
@@ -146,7 +149,12 @@ nav ul {
     gap: 35px;
 }
 
-nav a {
+.nav-links li {
+    margin: 0;
+}
+
+.nav-links a {
+    display: block;
     color: white;
     font-weight: bold;
     padding: 8px 12px;
@@ -154,13 +162,13 @@ nav a {
     transition: background-color 0.2s ease;
 }
 
-nav a:hover,
-nav a[aria-current="page"] {
+.nav-links a:hover,
+.nav-links a[aria-current="page"] {
     background-color: #624786;
     text-decoration: none;
 }
 
-/* ---------- MAIN CONTENT ---------- */
+/* MAIN CONTENT */
 
 main {
     width: 90%;
@@ -203,7 +211,7 @@ section li {
     margin-bottom: 7px;
 }
 
-/* ---------- GAMING SECTION ---------- */
+/* GAMING SECTION */
 
 #gaming figure {
     margin: 22px auto;
@@ -222,14 +230,10 @@ section li {
     margin-top: 8px;
 }
 
-/* ---------- WEATHER SECTION ---------- */
+/* WEATHER SECTION */
 
 #weather-section {
     border-top: 5px solid #24563b;
-}
-
-#weather-section h2 {
-    color: #24563b;
 }
 
 .weather-card {
@@ -270,7 +274,7 @@ section li {
     flex-shrink: 0;
 }
 
-/* City autocomplete */
+/* CITY SUGGESTIONS */
 
 #city-suggestions {
     list-style: none;
@@ -313,7 +317,7 @@ section li {
     color: #183d29;
 }
 
-/* Weather status */
+/* WEATHER STATUS */
 
 #weather-status {
     margin: 18px 0;
@@ -325,7 +329,7 @@ section li {
     color: #b42318;
 }
 
-/* Weather results */
+/* WEATHER RESULTS */
 
 #weather-results {
     padding-top: 15px;
@@ -402,7 +406,7 @@ section li {
     background-color: #302044;
 }
 
-/* ---------- JAVASCRIPT ASSIGNMENT ---------- */
+/* JAVASCRIPT ASSIGNMENT */
 
 #javascript-demo {
     border-top: 5px solid #493267;
@@ -429,8 +433,6 @@ section li {
                 box-shadow 0.3s ease;
 }
 
-/* Interactive input styling */
-
 #javascript-demo input.input-active {
     background-color: #e4f5e9;
     border: 2px solid #24563b;
@@ -444,7 +446,7 @@ section li {
     margin: 10px 0;
 }
 
-/* Dynamic list */
+/* DYNAMIC LIST */
 
 #dynamic-list {
     margin-top: 15px;
@@ -468,7 +470,7 @@ section li {
     background-color: #302044;
 }
 
-/* ---------- FOOTER ---------- */
+/* FOOTER */
 
 footer {
     background-color: #24563b;
@@ -483,21 +485,20 @@ footer p {
     font-size: 0.95rem;
 }
 
-/* ---------- ANIMATIONS ---------- */
+/* ANIMATIONS */
 
 @keyframes weatherFade {
     from {
         opacity: 0;
         transform: translateY(8px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* ---------- TABLET RESPONSIVENESS ---------- */
+/* TABLET */
 
 @media (max-width: 768px) {
 
@@ -514,8 +515,30 @@ footer p {
         padding: 22px;
     }
 
-    nav ul {
+    .menu-toggle {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        align-items: center;
         gap: 12px;
+        padding-top: 15px;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-links a {
+        width: 100%;
     }
 
     .weather-card {
@@ -523,7 +546,7 @@ footer p {
     }
 }
 
-/* ---------- MOBILE RESPONSIVENESS ---------- */
+/* MOBILE */
 
 @media (max-width: 600px) {
 
@@ -536,12 +559,8 @@ footer p {
     }
 
     nav {
-        position: relative;
-    }
-
-    nav ul {
-        flex-direction: column;
-        gap: 10px;
+        position: sticky;
+        top: 0;
     }
 
     main {
@@ -589,7 +608,7 @@ footer p {
     }
 }
 
-/* ---------- REDUCED MOTION ---------- */
+/* REDUCED MOTION */
 
 @media (prefers-reduced-motion: reduce) {
     *,
@@ -598,61 +617,5 @@ footer p {
         scroll-behavior: auto !important;
         animation-duration: 0.01ms !important;
         transition-duration: 0.01ms !important;
-    }
-}
-
-/* =========================================
-   NAVIGATION MENU FIX
-   Desktop and Mobile
-   ========================================= */
-
-/* DESKTOP */
-.menu-toggle {
-    display: none;
-}
-
-.nav-links {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 35px;
-    list-style: none;
-}
-
-/* MOBILE */
-@media (max-width: 600px) {
-
-    nav {
-        text-align: center;
-    }
-
-    .menu-toggle {
-        display: block;
-        margin: 0 auto;
-        width: auto;
-        min-width: 110px;
-    }
-
-    .nav-links {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
-        padding-top: 15px;
-    }
-
-    .nav-links.active {
-        display: flex;
-    }
-
-    .nav-links li {
-        width: 100%;
-        text-align: center;
-    }
-
-    .nav-links a {
-        display: block;
-        width: 100%;
     }
 }
