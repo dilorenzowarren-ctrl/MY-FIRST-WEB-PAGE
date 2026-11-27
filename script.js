@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     // ==========================================
-    // INTERACTION 1: Mobile Navigation Menu
+    // 1. MOBILE NAVIGATION
     // ==========================================
 
     const menuButton = document.getElementById("menu-toggle");
@@ -10,60 +10,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (menuButton && navList) {
         menuButton.addEventListener("click", function () {
-
             const isOpen =
                 menuButton.getAttribute("aria-expanded") === "true";
 
             menuButton.setAttribute("aria-expanded", String(!isOpen));
 
-            if (isOpen) {
-                navList.classList.remove("mobile-visible");
-            } else {
-                navList.classList.add("mobile-visible");
-            }
+            navList.classList.toggle("mobile-visible", !isOpen);
         });
     }
 
 
     // ==========================================
-    // INTERACTION 2: Contact Form Validation
+    // 2. CONTACT FORM VALIDATION
     // ==========================================
 
     const form = document.getElementById("contact-form");
 
     if (form) {
-
         const status = document.getElementById("form-status");
 
         const fields = [
-            {
-                id: "name",
-                errorId: "name-error",
-                message: "Please enter your full name."
-            },
-            {
-                id: "email",
-                errorId: "email-error",
-                message: "Please enter a valid email address."
-            },
-            {
-                id: "subject",
-                errorId: "subject-error",
-                message: "Please enter a subject."
-            },
-            {
-                id: "message",
-                errorId: "message-error",
-                message: "Please enter a message."
-            }
+            { id: "name", errorId: "name-error", message: "Please enter your full name." },
+            { id: "email", errorId: "email-error", message: "Please enter a valid email address." },
+            { id: "subject", errorId: "subject-error", message: "Please enter a subject." },
+            { id: "message", errorId: "message-error", message: "Please enter a message." }
         ];
 
         function validateField(field) {
-
             const input = document.getElementById(field.id);
             const error = document.getElementById(field.errorId);
-            const value = input.value.trim();
 
+            if (!input || !error) return false;
+
+            const value = input.value.trim();
             let errorMessage = "";
 
             if (value === "") {
@@ -77,29 +56,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
             error.textContent = errorMessage;
 
-            if (errorMessage !== "") {
-                input.classList.add("invalid");
-                input.setAttribute("aria-invalid", "true");
-                return false;
-            } else {
-                input.classList.remove("invalid");
-                input.setAttribute("aria-invalid", "false");
-                return true;
-            }
+            input.classList.toggle("invalid", errorMessage !== "");
+            input.setAttribute(
+                "aria-invalid",
+                String(errorMessage !== "")
+            );
+
+            return errorMessage === "";
         }
 
         form.addEventListener("submit", function (event) {
-
             event.preventDefault();
 
             let formIsValid = true;
             let firstInvalidField = null;
 
             fields.forEach(function (field) {
+                const valid = validateField(field);
 
-                const isValid = validateField(field);
-
-                if (!isValid) {
+                if (!valid) {
                     formIsValid = false;
 
                     if (!firstInvalidField) {
@@ -110,115 +85,167 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             if (!formIsValid) {
+                status.textContent = "Please correct the errors above.";
 
-                status.textContent =
-                    "Please correct the errors above.";
-
-                firstInvalidField.focus();
-
+                if (firstInvalidField) {
+                    firstInvalidField.focus();
+                }
             } else {
-
                 status.textContent =
                     "All fields are valid! Thank you.";
 
                 form.reset();
 
                 fields.forEach(function (field) {
-
                     const input =
                         document.getElementById(field.id);
-
                     const error =
                         document.getElementById(field.errorId);
 
-                    input.classList.remove("invalid");
-                    input.removeAttribute("aria-invalid");
-                    error.textContent = "";
+                    if (input && error) {
+                        input.classList.remove("invalid");
+                        input.removeAttribute("aria-invalid");
+                        error.textContent = "";
+                    }
                 });
             }
         });
 
         fields.forEach(function (field) {
-
             const input = document.getElementById(field.id);
 
-            input.addEventListener("input", function () {
-                validateField(field);
-                status.textContent = "";
-            });
+            if (input) {
+                input.addEventListener("input", function () {
+                    validateField(field);
+                    status.textContent = "";
+                });
+            }
         });
     }
 
 
     // ==========================================
-    // INTERACTION 3: Dog of the Day API
+    // 3. PORT ST. LUCIE WEATHER
     // ==========================================
 
-    const dogButton = document.getElementById("new-dog-button");
-    const dogImage = document.getElementById("dog-image");
-    const dogStatus = document.getElementById("dog-status");
+    const weatherButton =
+        document.getElementById("weather-refresh");
 
-    if (dogButton && dogImage && dogStatus) {
+    const weatherStatus =
+        document.getElementById("weather-status");
 
-        async function getRandomDog() {
+    const weatherDetails =
+        document.getElementById("weather-details");
 
-            dogButton.disabled = true;
-            dogImage.hidden = true;
+    if (weatherButton && weatherStatus && weatherDetails) {
 
-            dogStatus.textContent = "Finding a furry friend...";
+        const weatherURL =
+            "https://api.open-meteo.com/v1/forecast" +
+            "?latitude=27.2730" +
+            "&longitude=-80.3582" +
+            "&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m" +
+            "&temperature_unit=fahrenheit" +
+            "&wind_speed_unit=mph" +
+            "&timezone=America%2FNew_York";
+
+        const weatherDescriptions = {
+            0: ["Clear sky", "☀️"],
+            1: ["Mainly clear", "🌤️"],
+            2: ["Partly cloudy", "⛅"],
+            3: ["Overcast", "☁️"],
+            45: ["Foggy", "🌫️"],
+            48: ["Foggy", "🌫️"],
+            51: ["Light drizzle", "🌦️"],
+            53: ["Drizzle", "🌦️"],
+            55: ["Heavy drizzle", "🌧️"],
+            61: ["Light rain", "🌧️"],
+            63: ["Rain", "🌧️"],
+            65: ["Heavy rain", "🌧️"],
+            71: ["Light snow", "🌨️"],
+            73: ["Snow", "🌨️"],
+            75: ["Heavy snow", "❄️"],
+            80: ["Rain showers", "🌦️"],
+            81: ["Rain showers", "🌧️"],
+            82: ["Heavy rain showers", "⛈️"],
+            95: ["Thunderstorm", "⛈️"],
+            96: ["Thunderstorm with hail", "⛈️"],
+            99: ["Severe thunderstorm", "⛈️"]
+        };
+
+        async function getWeather() {
+            weatherButton.disabled = true;
+            weatherStatus.textContent =
+                "Loading Port St. Lucie weather...";
+
+            weatherDetails.hidden = true;
 
             try {
-
-                // Request a random dog from Dog CEO.
-
-                const response = await fetch(
-                    "https://dog.ceo/api/breeds/image/random"
-                );
+                const response = await fetch(weatherURL);
 
                 if (!response.ok) {
-                    throw new Error("The dog service is unavailable.");
+                    throw new Error("Weather service unavailable.");
                 }
 
                 const data = await response.json();
 
-                if (data.status !== "success" || !data.message) {
-                    throw new Error("No dog picture was returned.");
+                if (!data.current) {
+                    throw new Error("Weather data is missing.");
                 }
 
-                // Set image handlers before loading the image.
+                const current = data.current;
 
-                dogImage.onload = function () {
-                    dogImage.hidden = false;
-                    dogStatus.textContent =
-                        "Look at this adorable dog!";
+                const weatherInfo =
+                    weatherDescriptions[current.weather_code] ||
+                    ["Current conditions", "🌤️"];
 
-                    dogButton.disabled = false;
-                };
+                document.getElementById("weather-icon").textContent =
+                    weatherInfo[1];
 
-                dogImage.onerror = function () {
-                    dogImage.hidden = true;
+                document.getElementById("weather-temperature").textContent =
+                    Math.round(current.temperature_2m) + "°F";
 
-                    dogStatus.textContent =
-                        "The dog picture could not load. Please try again.";
+                document.getElementById("weather-description").textContent =
+                    weatherInfo[0];
 
-                    dogButton.disabled = false;
-                };
+                document.getElementById("weather-feels-like").textContent =
+                    "Feels like: " +
+                    Math.round(current.apparent_temperature) + "°F";
 
-                dogImage.alt = "A randomly selected dog";
-                dogImage.src = data.message;
+                document.getElementById("weather-humidity").textContent =
+                    "Humidity: " +
+                    current.relative_humidity_2m + "%";
+
+                document.getElementById("weather-wind").textContent =
+                    "Wind: " +
+                    Math.round(current.wind_speed_10m) + " mph";
+
+                const updatedTime = new Date(current.time);
+
+                document.getElementById("weather-updated").textContent =
+                    "Last updated: " +
+                    updatedTime.toLocaleTimeString("en-US", {
+                        hour: "numeric",
+                        minute: "2-digit"
+                    });
+
+                weatherDetails.hidden = false;
+
+                weatherStatus.textContent =
+                    "Current weather in Port St. Lucie, Florida";
 
             } catch (error) {
+                weatherStatus.textContent =
+                    "Weather could not load. Please check your connection and try again.";
 
-                dogImage.hidden = true;
-
-                dogStatus.textContent =
-                    "Sorry, we couldn't load a dog right now. Please try again.";
-
-                dogButton.disabled = false;
+            } finally {
+                weatherButton.disabled = false;
             }
         }
 
-        dogButton.addEventListener("click", getRandomDog);
+        weatherButton.addEventListener("click", getWeather);
+
+        // Load weather automatically when the page opens.
+        getWeather();
     }
 
 });
