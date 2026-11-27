@@ -122,25 +122,32 @@ document.addEventListener("DOMContentLoaded", function () {
         async function getRandomDog() {
             dogButton.disabled = true;
             dogImage.hidden = true;
-            dogStatus.textContent = "Finding a furry friend...";
+            dogStatus.textContent = "Contacting dog service...";
+
+            const controller = new AbortController();
+            const apiTimeout = setTimeout(function () {
+                controller.abort();
+            }, 15000);
 
             try {
                 const response = await fetch(
                     "https://dog.ceo/api/breeds/image/random",
-                    { signal: AbortSignal.timeout(15000) }
+                    { signal: controller.signal }
                 );
 
+                clearTimeout(apiTimeout);
+
                 if (!response.ok) {
-                    throw new Error("Unable to retrieve a dog image.");
+                    throw new Error("The dog service returned an error.");
                 }
 
                 const data = await response.json();
 
                 if (data.status !== "success" || !data.message) {
-                    throw new Error("The dog image could not be found.");
+                    throw new Error("No dog image was returned.");
                 }
 
-                // Wait for the dog image to load before displaying it.
+                dogStatus.textContent = "Dog found! Loading picture...";
 
                 const imageLoaded = new Promise(function (resolve, reject) {
                     dogImage.onload = resolve;
@@ -150,24 +157,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 dogImage.alt = "A randomly selected dog";
                 dogImage.src = data.message;
 
-                await Promise.race([
-                    imageLoaded,
-                    new Promise(function (_, reject) {
-                        setTimeout(function () {
-                            reject(new Error("Image loading timed out."));
-                        }, 15000);
-                    })
-                ]);
+                await imageLoaded;
 
                 dogImage.hidden = false;
                 dogStatus.textContent = "Look at this adorable dog!";
 
             } catch (error) {
                 dogImage.hidden = true;
-                dogStatus.textContent =
-                    "Sorry, we couldn't load a dog right now. Please try again.";
+
+                if (error.name === "AbortError") {
+                    dogStatus.textContent = "The request timed out. Please try again.";
+                } else {
+                    dogStatus.textContent = "Error: " + error.message;
+                }
 
             } finally {
+                clearTimeout(apiTimeout);
                 dogButton.disabled = false;
             }
         }
