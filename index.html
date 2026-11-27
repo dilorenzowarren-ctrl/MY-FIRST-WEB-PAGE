@@ -1,231 +1,158 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="description" content="My personal website featuring my interests, gaming, goals, and a worldwide weather search.">
-
+    <meta name="description" content="My personal website featuring my interests, gaming, goals, and worldwide weather.">
     <title>Home | My Personal Website</title>
-
     <link rel="stylesheet" href="style.css">
-
     <script src="script.js" defer></script>
 </head>
 
 <body>
 
-    <!-- SKIP LINK FOR ACCESSIBILITY -->
-
-    <a class="skip-link" href="#main-content">
-        Skip to main content
-    </a>
-
-
-    <!-- HEADER -->
+    <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <header>
-        <h1 id="main-title">Welcome to My Website</h1>
-
+        <h1>Welcome to My Website</h1>
         <div class="content-box">
-            <p>
-                Welcome to my personal webpage! This is where I share
-                some of my interests, favorite games, personal goals,
-                and projects.
-            </p>
+            <p>Welcome to my personal webpage! This is where I share some of my interests, favorite games, and goals.</p>
         </div>
     </header>
 
-
-    <!-- NAVIGATION -->
-
     <nav aria-label="Main navigation">
-
-        <button
-            type="button"
-            id="menu-toggle"
-            aria-expanded="false"
-            aria-controls="nav-list">
+        <button type="button" id="menu-toggle"
+            aria-expanded="false" aria-controls="nav-list">
             Menu
         </button>
 
         <ul id="nav-list">
-            <li>
-                <a href="index.html" aria-current="page">Home</a>
-            </li>
-
-            <li>
-                <a href="projects.html">Projects</a>
-            </li>
-
-            <li>
-                <a href="about.html">About / Contact</a>
-            </li>
+            <li><a href="index.html" aria-current="page">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="about.html">About / Contact</a></li>
         </ul>
-
     </nav>
-
-
-    <!-- MAIN CONTENT -->
 
     <main id="main-content">
 
-
-        <!-- INTERESTS -->
-
         <section id="interests">
-
             <h2>My Interests</h2>
-
             <p>
-                I enjoy learning new things, exploring different
-                interests, and finding activities that make my
-                free time enjoyable. I also like developing new
-                skills and learning how things work.
+                I enjoy learning new things, exploring different interests,
+                and finding activities that make my free time enjoyable.
+                I also like developing new skills and learning how things work.
             </p>
-
         </section>
 
-
-        <!-- VIDEO GAMES -->
-
         <section id="gaming">
-
             <h2>Video Games</h2>
 
             <article>
-
                 <h3>Games I Enjoy</h3>
-
                 <p>
-                    Video games are one of my favorite hobbies.
-                    Some of the games I enjoy playing include
-                    Call of Duty, Borderlands, Gears of War,
-                    Halo, and Halo: Reach. I like games that
+                    Video games are one of my favorite hobbies. Some of the
+                    games I enjoy playing include Call of Duty, Borderlands,
+                    Gears of War, Halo, and Halo: Reach. I like games that
                     are exciting and offer a good challenge.
                 </p>
 
                 <figure>
-
                     <img
                         src="https://upload.wikimedia.org/wikipedia/commons/1/12/Halo_Reach-e3_2009_trailer.jpg"
                         alt="Halo: Reach promotional display at E3 2009"
                         loading="lazy">
-
-                    <figcaption>
-                        Halo: Reach at E3 2009.
-                    </figcaption>
-
+                    <figcaption>Halo: Reach at E3 2009.</figcaption>
                 </figure>
-
             </article>
-
         </section>
 
-
-        <!-- PERSONAL GOALS -->
-
         <section id="goals">
-
             <h2>My Goals</h2>
-
             <p>
-                One of my goals is to continue learning and
-                improving my skills. Learning web development
-                gives me a chance to understand how websites
-                are created and organized.
+                One of my goals is to continue learning and improving my
+                skills. Learning web development gives me a chance to
+                understand how websites are created and organized.
             </p>
 
             <h3>Things I Want to Learn</h3>
-
             <ol>
                 <li>Understand HTML and webpage structure.</li>
-
-                <li>
-                    Learn how CSS can improve the appearance
-                    of a website.
-                </li>
-
-                <li>
-                    Create webpages that work on phones,
-                    tablets, and computers.
-                </li>
+                <li>Learn how CSS can improve the appearance of a website.</li>
+                <li>Create webpages that work on phones, tablets, and computers.</li>
             </ol>
-
         </section>
 
+        <!-- WORLDWIDE WEATHER -->
 
-        <!-- WORLDWIDE WEATHER FEATURE -->
+        <section id="weather-section">
+            <h2>🌤️ Worldwide Weather</h2>
+            <p>Search for the current weather in any city around the world!</p>
 
+            <div class="weather-card">
 
-<section id="weather-section">
-    <h2>🌤️ Worldwide Weather</h2>
-    <p>Search for the current weather in any city!</p>
+                <form id="weather-form" autocomplete="off">
 
-    <div class="weather-card">
+                    <label for="city-search">Search for a city:</label>
 
-        <form id="weather-form">
-            <label for="city-search">Enter a city:</label>
+                    <input
+                        type="text"
+                        id="city-search"
+                        placeholder="Start typing a city..."
+                        value="Port St. Lucie"
+                        autocomplete="off"
+                        aria-autocomplete="list"
+                        aria-controls="city-suggestions"
+                        required>
 
-            <input
-                type="text"
-                id="city-search"
-                placeholder="Example: Miami, London, Tokyo"
-                value="Port St. Lucie"
-                required>
+                    <ul id="city-suggestions"
+                        role="listbox"
+                        aria-label="City suggestions"
+                        hidden>
+                    </ul>
 
-            <button type="submit" id="weather-search-button">
-                Search Weather
-            </button>
-        </form>
+                    <button type="submit" id="weather-search-button">
+                        Search Weather
+                    </button>
 
-        <p id="weather-status" aria-live="polite">
-            Loading weather...
-        </p>
+                </form>
 
-        <div id="weather-details" hidden>
-            <h3 id="weather-city"></h3>
+                <p id="weather-status" aria-live="polite">
+                    Loading weather...
+                </p>
 
-            <p id="weather-icon" aria-hidden="true">🌤️</p>
+                <div id="weather-details" hidden>
 
-            <h3 id="weather-temperature">--°F</h3>
+                    <h3 id="weather-city"></h3>
 
-            <p id="weather-description">Weather conditions</p>
+                    <p id="weather-icon" aria-hidden="true">🌤️</p>
 
-            <p id="weather-feels-like">Feels like: --°F</p>
+                    <h3 id="weather-temperature">--°F</h3>
 
-            <p id="weather-humidity">Humidity: --%</p>
+                    <p id="weather-description">Weather conditions</p>
 
-            <p id="weather-wind">Wind: -- mph</p>
+                    <p id="weather-feels-like">Feels like: --°F</p>
 
-            <p id="weather-updated"></p>
-        </div>
+                    <p id="weather-humidity">Humidity: --%</p>
 
-        <button type="button" id="weather-refresh">
-            Refresh Weather
-        </button>
+                    <p id="weather-wind">Wind: -- mph</p>
 
-    </div>
-</section>
+                    <p id="weather-updated"></p>
 
+                </div>
 
+                <button type="button" id="weather-refresh">
+                    Refresh Weather
+                </button>
+
+            </div>
+        </section>
 
     </main>
 
-
-    <!-- FOOTER -->
-
     <footer>
-
-        <p>
-            Created as part of my web development coursework.
-        </p>
-
+        <p>Created as part of my web development coursework.</p>
     </footer>
 
-
 </body>
-
 </html>
