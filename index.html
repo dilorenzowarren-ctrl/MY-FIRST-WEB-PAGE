@@ -1,87 +1,156 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <meta name="description" content="My personal webpage about my interests, gaming, and goals.">
+
     <title>Home | My Personal Website</title>
+
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
+
 <body>
-<a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <a class="skip-link" href="#main-content">
+        Skip to main content
+    </a>
+
     <header>
-        <h1 id="main-title">Welcome to My Website</h1>
         <div class="content-box">
-            <p>Welcome to my personal webpage! This is where I share some of my interests, favorite games, and goals.</p>
+            <h1 id="main-title">Welcome to My Website</h1>
+
+            <p>
+                Welcome to my personal webpage! This is where I share
+                some of my interests, favorite games, and goals.
+            </p>
         </div>
     </header>
 
     <nav aria-label="Main navigation">
-        <ul>
-            <li><a href="index.html" aria-current="page">Home</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="about.html">About / Contact</a></li>
+
+        <button
+            type="button"
+            id="menu-toggle"
+            aria-expanded="false"
+            aria-controls="nav-list">
+            Menu
+        </button>
+
+        <ul id="nav-list">
+
+            <li>
+                <a href="index.html" aria-current="page">Home</a>
+            </li>
+
+            <li>
+                <a href="projects.html">Projects</a>
+            </li>
+
+            <li>
+                <a href="about.html">About / Contact</a>
+            </li>
+
         </ul>
+
     </nav>
 
-<main id="main-content">
+    <main id="main-content">
+
         <section id="interests">
+
             <h2>My Interests</h2>
+
             <p>
-                I enjoy learning new things, exploring different interests,
-                and finding activities that make my free time enjoyable.
-                I also like developing new skills and learning how things work.
+                I enjoy learning new things, exploring different
+                interests, and finding activities that make my
+                free time enjoyable. I also like developing new
+                skills and learning how things work.
             </p>
+
         </section>
 
         <section id="gaming">
+
             <h2>Video Games</h2>
 
             <article>
+
                 <h3>Games I Enjoy</h3>
+
                 <p>
-                    Video games are one of my favorite hobbies. Some of the
-                    games I enjoy playing include Call of Duty, Borderlands,
-                    Gears of War, Halo, and Halo: Reach. I like games that
+                    Video games are one of my favorite hobbies.
+                    Some of the games I enjoy playing include
+                    Call of Duty, Borderlands, Gears of War,
+                    Halo, and Halo: Reach. I like games that
                     are exciting and offer a good challenge.
                 </p>
 
                 <figure>
+
                     <img
                         src="https://upload.wikimedia.org/wikipedia/commons/1/12/Halo_Reach-e3_2009_trailer.jpg"
                         alt="Halo: Reach promotional display at E3 2009"
-                        loading="lazy"
-                    >
+                        loading="lazy">
+
                     <figcaption>
                         Halo: Reach at E3 2009.
                         <a href="https://creativecommons.org/licenses/by-sa/2.0/">
                             Creative Commons Attribution-ShareAlike 2.0
                         </a>.
                     </figcaption>
+
                 </figure>
+
             </article>
+
         </section>
 
         <section id="goals">
+
             <h2>My Goals</h2>
+
             <p>
-                One of my goals is to continue learning and improving my
-                skills. Learning web development gives me a chance to
-                understand how websites are created and organized.
+                One of my goals is to continue learning and improving
+                my skills. Learning web development gives me a chance
+                to understand how websites are created and organized.
             </p>
 
             <h3>Things I Want to Learn</h3>
+
             <ol>
                 <li>Understand HTML and webpage structure.</li>
                 <li>Learn how CSS can improve the appearance of a website.</li>
                 <li>Create webpages that work on phones, tablets, and computers.</li>
             </ol>
+
         </section>
+
+        <section id="explore">
+
+            <h2>Explore My Website</h2>
+
+            <p>
+                Interested in learning more? Visit my other pages
+                to explore my projects and contact information.
+            </p>
+
+            <p>
+                <a href="projects.html">View My Projects</a>
+                |
+                <a href="about.html">Contact Me</a>
+            </p>
+
+        </section>
+
     </main>
 
     <footer>
-        <p>Created as part of my web development coursework.</p>
+        <p>&copy; 2026 My Personal Website. Created as part of my web development coursework.</p>
     </footer>
 
 </body>
