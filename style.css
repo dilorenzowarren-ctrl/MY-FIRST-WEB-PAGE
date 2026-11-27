@@ -619,3 +619,53 @@ footer p {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* FINAL NAVIGATION FIX - SUPPORT BOTH ID AND CLASS NAMES */
+
+#menu-toggle,
+.menu-toggle {
+    display: none;
+}
+
+#nav-list,
+.nav-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 35px;
+    list-style: none;
+}
+
+#nav-list a,
+.nav-links a {
+    color: white;
+}
+
+@media (max-width: 768px) {
+    #menu-toggle,
+    .menu-toggle {
+        display: block;
+        margin: 0 auto;
+    }
+
+    #nav-list,
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        gap: 12px;
+        padding-top: 15px;
+    }
+
+    #nav-list.active,
+    .nav-links.active {
+        display: flex;
+    }
+
+    #nav-list li,
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+    }
+}
