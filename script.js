@@ -138,19 +138,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     throw new Error("The dog image could not be found.");
                 }
 
-                dogImage.src = data.message;
-                dogImage.alt = "A randomly selected dog";
+           dogImage.alt = "A randomly selected dog";
 
-                dogImage.onload = function () {
-                    dogImage.hidden = false;
-                    dogStatus.textContent = "Look at this adorable dog!";
-                };
+dogImage.onload = function () {
+    dogImage.hidden = false;
+    dogStatus.textContent = "Look at this adorable dog!";
+};
 
-                dogImage.onerror = function () {
-                    dogImage.hidden = true;
-                    dogStatus.textContent = "Sorry, this dog image could not load. Please try again.";
-                };
+dogImage.onerror = function () {
+    dogImage.hidden = true;
+    dogStatus.textContent = "Sorry, this dog image could not load. Please try again.";
+};
 
+dogImage.src = data.message;
             } catch (error) {
                 dogImage.hidden = true;
                 dogStatus.textContent = "Sorry, we couldn't load a dog right now. Please try again.";
