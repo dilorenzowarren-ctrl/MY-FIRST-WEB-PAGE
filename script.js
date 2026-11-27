@@ -3,6 +3,25 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    // NAVIGATION MENU - SUPPORT ALL THREE PAGES
+
+    const menuButton =
+        document.querySelector("#menu-toggle, .menu-toggle");
+
+    const menuList =
+        document.querySelector("#nav-list, .nav-links");
+
+    if (menuButton && menuList) {
+        menuButton.addEventListener("click", () => {
+            const isOpen = menuList.classList.toggle("active");
+
+            menuButton.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+        });
+    }
+
     // ==========================================
     // MOBILE NAVIGATION MENU
     // ==========================================
