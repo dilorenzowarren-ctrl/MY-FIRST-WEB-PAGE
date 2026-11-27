@@ -21,7 +21,12 @@
 </header>
 
 <nav aria-label="Main navigation">
-    <ul>
+    <button type="button" class="menu-toggle"
+            aria-expanded="false" aria-controls="nav-links">
+        Menu
+    </button>
+
+    <ul class="nav-links" id="nav-links">
         <li><a href="index.html" aria-current="page">Home</a></li>
         <li><a href="projects.html">Projects</a></li>
         <li><a href="about.html">About / Contact</a></li>
@@ -62,7 +67,6 @@
         </ol>
     </section>
 
-    <!-- WORLDWIDE WEATHER DASHBOARD -->
     <section id="weather-section">
         <h2>Worldwide Weather</h2>
         <p>Search for a city anywhere in the world to see its current weather conditions.</p>
@@ -79,14 +83,18 @@
                            required>
                     <button type="submit" id="weather-search-button">Search</button>
                 </div>
-                <ul id="city-suggestions" role="listbox" aria-label="City suggestions" hidden></ul>
+                <ul id="city-suggestions" role="listbox"
+                    aria-label="City suggestions" hidden></ul>
             </form>
 
-            <p id="weather-status" role="status" aria-live="polite">Search for a city to get started.</p>
+            <p id="weather-status" role="status" aria-live="polite">
+                Search for a city to get started.
+            </p>
 
             <div id="weather-results" hidden>
                 <h3 id="weather-city"></h3>
                 <p id="weather-description"></p>
+
                 <div class="weather-temperature">
                     <span id="weather-icon" aria-hidden="true">🌤️</span>
                     <span id="weather-temperature">--°F</span>
@@ -108,24 +116,29 @@
                 </div>
 
                 <p id="weather-updated"></p>
-                <button type="button" id="weather-refresh-button">Refresh Weather</button>
+                <button type="button" id="weather-refresh-button">
+                    Refresh Weather
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- DOM MANIPULATION AND EVENTS ASSIGNMENT -->
     <section id="javascript-demo">
         <h2>JavaScript Interactivity</h2>
-        <p>This section demonstrates how JavaScript can respond to user actions and dynamically update a webpage.</p>
+        <p>This section demonstrates how JavaScript responds to user actions and dynamically updates a webpage.</p>
 
         <h3>1. Interactive Button</h3>
-        <p id="welcome-message" aria-live="polite">Click the button to change this message!</p>
+        <p id="welcome-message" aria-live="polite">
+            Click the button to change this message!
+        </p>
         <button type="button" id="message-button">Click Me!</button>
 
         <h3>2. Interactive Styling</h3>
         <label for="color-input">Type something below:</label>
         <input type="text" id="color-input" placeholder="Start typing...">
-        <p id="input-feedback" aria-live="polite">The input field changes appearance when you type.</p>
+        <p id="input-feedback" aria-live="polite">
+            The input field changes appearance when you type.
+        </p>
 
         <h3>3. Dynamic List</h3>
         <p>Add your own items to this list. You can also remove items.</p>
