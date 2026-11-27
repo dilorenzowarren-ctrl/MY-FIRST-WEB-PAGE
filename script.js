@@ -377,26 +377,34 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        weatherForm.addEventListener("submit", function (event) {
-            event.preventDefault();
+       
+weatherForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    event.stopPropagation();
 
-            const city = cityInput.value.trim();
+    const city = cityInput.value.trim();
 
-            if (!city) return;
+    if (!city) {
+        weatherStatus.textContent = "Please enter a city name.";
+        cityInput.focus();
+        return;
+    }
 
-            if (selectedLocation) {
-                loadWeather(selectedLocation);
-            } else {
-                searchCity(city);
-            }
+    suggestions.hidden = true;
 
-            if (weatherSection) {
-                weatherSection.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-            }
+    if (selectedLocation) {
+        await loadWeather(selectedLocation);
+    } else {
+        await searchCity(city);
+    }
+
+    if (weatherSection) {
+        weatherSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
         });
+    }
+});
 
 
         // REFRESH CURRENT CITY
