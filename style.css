@@ -428,3 +428,60 @@ footer p {
         margin: 15px auto;
     }
 }
+
+/* JavaScript Interactivity Assignment */
+
+#javascript-demo {
+    border-top: 4px solid #24563B;
+}
+
+#javascript-demo h2 {
+    color: #24563B;
+}
+
+#javascript-demo h3 {
+    margin-top: 25px;
+}
+
+#javascript-demo input {
+    margin-bottom: 12px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Input styling changes when the user types */
+
+#javascript-demo input.input-active {
+    background-color: #e4f5e9;
+    border: 2px solid #24563B;
+}
+
+#input-feedback,
+#list-feedback {
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+/* Dynamic list styling */
+
+#dynamic-list {
+    padding-left: 25px;
+}
+
+#dynamic-list li {
+    margin-bottom: 12px;
+}
+
+.remove-button {
+    margin-left: 12px;
+    padding: 6px 12px;
+    font-size: 13px;
+    background-color: #493267;
+}
+
+.remove-button:hover {
+    background-color: #302044;
+}
+
+#javascript-demo button {
+    margin-top: 5px;
+}
