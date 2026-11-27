@@ -1,123 +1,260 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="My personal webpage about my interests, gaming, and goals.">
+
+    <meta name="description" content="My personal website featuring my interests, gaming, goals, and a worldwide weather search.">
+
     <title>Home | My Personal Website</title>
+
     <link rel="stylesheet" href="style.css">
+
     <script src="script.js" defer></script>
 </head>
 
 <body>
 
-<a class="skip-link" href="#main-content">Skip to main content</a>
+    <!-- SKIP LINK FOR ACCESSIBILITY -->
 
-<header>
-    <h1 id="main-title">Welcome to My Website</h1>
-    <div class="content-box">
-        <p>Welcome to my personal webpage! This is where I share some of my interests, favorite games, and goals.</p>
-    </div>
-</header>
+    <a class="skip-link" href="#main-content">
+        Skip to main content
+    </a>
 
-<nav aria-label="Main navigation">
-    <button type="button" id="menu-toggle"
-        aria-expanded="false" aria-controls="nav-list">
-        Menu
-    </button>
 
-    <ul id="nav-list">
-        <li><a href="index.html" aria-current="page">Home</a></li>
-        <li><a href="projects.html">Projects</a></li>
-        <li><a href="about.html">About / Contact</a></li>
-    </ul>
-</nav>
+    <!-- HEADER -->
 
-<main id="main-content">
+    <header>
+        <h1 id="main-title">Welcome to My Website</h1>
 
-    <section id="interests">
-        <h2>My Interests</h2>
-        <p>
-            I enjoy learning new things, exploring different interests,
-            and finding activities that make my free time enjoyable.
-            I also like developing new skills and learning how things work.
-        </p>
-    </section>
-
-    <section id="gaming">
-        <h2>Video Games</h2>
-        <article>
-            <h3>Games I Enjoy</h3>
+        <div class="content-box">
             <p>
-                Video games are one of my favorite hobbies. Some of the
-                games I enjoy playing include Call of Duty, Borderlands,
-                Gears of War, Halo, and Halo: Reach. I like games that
-                are exciting and offer a good challenge.
+                Welcome to my personal webpage! This is where I share
+                some of my interests, favorite games, personal goals,
+                and projects.
+            </p>
+        </div>
+    </header>
+
+
+    <!-- NAVIGATION -->
+
+    <nav aria-label="Main navigation">
+
+        <button
+            type="button"
+            id="menu-toggle"
+            aria-expanded="false"
+            aria-controls="nav-list">
+            Menu
+        </button>
+
+        <ul id="nav-list">
+            <li>
+                <a href="index.html" aria-current="page">Home</a>
+            </li>
+
+            <li>
+                <a href="projects.html">Projects</a>
+            </li>
+
+            <li>
+                <a href="about.html">About / Contact</a>
+            </li>
+        </ul>
+
+    </nav>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main id="main-content">
+
+
+        <!-- INTERESTS -->
+
+        <section id="interests">
+
+            <h2>My Interests</h2>
+
+            <p>
+                I enjoy learning new things, exploring different
+                interests, and finding activities that make my
+                free time enjoyable. I also like developing new
+                skills and learning how things work.
             </p>
 
-            <figure>
-                <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/1/12/Halo_Reach-e3_2009_trailer.jpg"
-                    alt="Halo: Reach promotional display at E3 2009"
-                    loading="lazy">
-                <figcaption>
-                    Halo: Reach at E3 2009.
-                    <a href="https://creativecommons.org/licenses/by-sa/2.0/">
-                        Creative Commons Attribution-ShareAlike 2.0
-                    </a>.
-                </figcaption>
-            </figure>
-        </article>
-    </section>
+        </section>
 
-    <section id="goals">
-        <h2>My Goals</h2>
-        <p>
-            One of my goals is to continue learning and improving my
-            skills. Learning web development gives me a chance to
-            understand how websites are created and organized.
-        </p>
 
-        <h3>Things I Want to Learn</h3>
-        <ol>
-            <li>Understand HTML and webpage structure.</li>
-            <li>Learn how CSS can improve the appearance of a website.</li>
-            <li>Create webpages that work on phones, tablets, and computers.</li>
-        </ol>
-    </section>
+        <!-- VIDEO GAMES -->
 
-    <!-- WEATHER FEATURE -->
-    <section id="weather-section">
-        <h2>🌤️ Port St. Lucie Weather</h2>
-        <p>Check the current weather in our hometown!</p>
+        <section id="gaming">
 
-        <div class="weather-card">
-            <p id="weather-status" aria-live="polite">
-                Loading the latest weather...
+            <h2>Video Games</h2>
+
+            <article>
+
+                <h3>Games I Enjoy</h3>
+
+                <p>
+                    Video games are one of my favorite hobbies.
+                    Some of the games I enjoy playing include
+                    Call of Duty, Borderlands, Gears of War,
+                    Halo, and Halo: Reach. I like games that
+                    are exciting and offer a good challenge.
+                </p>
+
+                <figure>
+
+                    <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/1/12/Halo_Reach-e3_2009_trailer.jpg"
+                        alt="Halo: Reach promotional display at E3 2009"
+                        loading="lazy">
+
+                    <figcaption>
+                        Halo: Reach at E3 2009.
+                    </figcaption>
+
+                </figure>
+
+            </article>
+
+        </section>
+
+
+        <!-- PERSONAL GOALS -->
+
+        <section id="goals">
+
+            <h2>My Goals</h2>
+
+            <p>
+                One of my goals is to continue learning and
+                improving my skills. Learning web development
+                gives me a chance to understand how websites
+                are created and organized.
             </p>
 
-            <div id="weather-details" hidden>
-                <p id="weather-icon" aria-hidden="true">🌤️</p>
-                <h3 id="weather-temperature">--°F</h3>
-                <p id="weather-description">Weather conditions</p>
-                <p id="weather-feels-like">Feels like: --°F</p>
-                <p id="weather-humidity">Humidity: --%</p>
-                <p id="weather-wind">Wind: -- mph</p>
-                <p id="weather-updated"></p>
+            <h3>Things I Want to Learn</h3>
+
+            <ol>
+                <li>Understand HTML and webpage structure.</li>
+
+                <li>
+                    Learn how CSS can improve the appearance
+                    of a website.
+                </li>
+
+                <li>
+                    Create webpages that work on phones,
+                    tablets, and computers.
+                </li>
+            </ol>
+
+        </section>
+
+
+        <!-- WORLDWIDE WEATHER FEATURE -->
+
+        <section id="weather-section">
+
+            <h2>🌤️ Worldwide Weather</h2>
+
+            <p>
+                Search for the current weather in any city around
+                the world!
+            </p>
+
+            <div class="weather-card">
+
+                <form id="weather-form">
+
+                    <label for="city-search">
+                        Enter a city:
+                    </label>
+
+                    <input
+                        type="text"
+                        id="city-search"
+                        placeholder="Example: Miami, London, Tokyo"
+                        value="Port St. Lucie"
+                        required>
+
+                    <button
+                        type="submit"
+                        id="weather-search-button">
+                        Search Weather
+                    </button>
+
+                </form>
+
+
+                <p id="weather-status" aria-live="polite">
+                    Loading weather...
+                </p>
+
+
+                <div id="weather-details" hidden>
+
+                    <h3 id="weather-city"></h3>
+
+                    <p id="weather-icon" aria-hidden="true">
+                        🌤️
+                    </p>
+
+                    <h3 id="weather-temperature">
+                        --°F
+                    </h3>
+
+                    <p id="weather-description">
+                        Weather conditions
+                    </p>
+
+                    <p id="weather-feels-like">
+                        Feels like: --°F
+                    </p>
+
+                    <p id="weather-humidity">
+                        Humidity: --%
+                    </p>
+
+                    <p id="weather-wind">
+                        Wind: -- mph
+                    </p>
+
+                    <p id="weather-updated"></p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="weather-refresh">
+                    Refresh Weather
+                </button>
+
             </div>
 
-            <button type="button" id="weather-refresh">
-                Refresh Weather
-            </button>
-        </div>
-    </section>
+        </section>
 
-</main>
 
-<footer>
-    <p>Created as part of my web development coursework.</p>
-</footer>
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            Created as part of my web development coursework.
+        </p>
+
+    </footer>
+
 
 </body>
+
 </html>
