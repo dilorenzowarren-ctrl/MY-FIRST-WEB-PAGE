@@ -281,9 +281,10 @@ footer p {
         padding: 20px;
     }
 
-    nav ul {
-        gap: 10px;
-    }
+ nav ul {
+    gap: 10px;
+    display: none;
+}
 
     fieldset {
         padding: 15px;
