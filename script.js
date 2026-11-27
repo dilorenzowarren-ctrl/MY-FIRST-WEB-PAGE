@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 menuButton.getAttribute("aria-expanded") === "true";
 
             menuButton.setAttribute("aria-expanded", String(!isOpen));
-
             navList.classList.toggle("mobile-visible", !isOpen);
         });
     }
@@ -55,12 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             error.textContent = errorMessage;
-
             input.classList.toggle("invalid", errorMessage !== "");
-            input.setAttribute(
-                "aria-invalid",
-                String(errorMessage !== "")
-            );
+            input.setAttribute("aria-invalid", String(errorMessage !== ""));
 
             return errorMessage === "";
         }
@@ -72,9 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let firstInvalidField = null;
 
             fields.forEach(function (field) {
-                const valid = validateField(field);
-
-                if (!valid) {
+                if (!validateField(field)) {
                     formIsValid = false;
 
                     if (!firstInvalidField) {
@@ -91,16 +84,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     firstInvalidField.focus();
                 }
             } else {
-                status.textContent =
-                    "All fields are valid! Thank you.";
-
+                status.textContent = "All fields are valid! Thank you.";
                 form.reset();
 
                 fields.forEach(function (field) {
-                    const input =
-                        document.getElementById(field.id);
-                    const error =
-                        document.getElementById(field.errorId);
+                    const input = document.getElementById(field.id);
+                    const error = document.getElementById(field.errorId);
 
                     if (input && error) {
                         input.classList.remove("invalid");
@@ -125,28 +114,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // ==========================================
-    // 3. PORT ST. LUCIE WEATHER
+    // 3. WORLDWIDE WEATHER AND CITY AUTOCOMPLETE
     // ==========================================
 
-    const weatherButton =
-        document.getElementById("weather-refresh");
+    const weatherForm = document.getElementById("weather-form");
+    const cityInput = document.getElementById("city-search");
+    const suggestions = document.getElementById("city-suggestions");
+    const weatherButton = document.getElementById("weather-search-button");
+    const refreshButton = document.getElementById("weather-refresh");
+    const weatherStatus = document.getElementById("weather-status");
+    const weatherDetails = document.getElementById("weather-details");
+    const weatherSection = document.getElementById("weather-section");
 
-    const weatherStatus =
-        document.getElementById("weather-status");
+    if (
+        weatherForm &&
+        cityInput &&
+        suggestions &&
+        weatherButton &&
+        refreshButton &&
+        weatherStatus &&
+        weatherDetails
+    ) {
 
-    const weatherDetails =
-        document.getElementById("weather-details");
+        let currentLocation = {
+            name: "Port St. Lucie",
+            latitude: 27.2730,
+            longitude: -80.3582,
+            country: "United States"
+        };
 
-    if (weatherButton && weatherStatus && weatherDetails) {
-
-        const weatherURL =
-            "https://api.open-meteo.com/v1/forecast" +
-            "?latitude=27.2730" +
-            "&longitude=-80.3582" +
-            "&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m" +
-            "&temperature_unit=fahrenheit" +
-            "&wind_speed_unit=mph" +
-            "&timezone=America%2FNew_York";
+        let selectedLocation = null;
+        let suggestionTimer = null;
+        let searchNumber = 0;
 
         const weatherDescriptions = {
             0: ["Clear sky", "☀️"],
@@ -172,24 +171,127 @@ document.addEventListener("DOMContentLoaded", function () {
             99: ["Severe thunderstorm", "⛈️"]
         };
 
-        async function getWeather() {
-            weatherButton.disabled = true;
-            weatherStatus.textContent =
-                "Loading Port St. Lucie weather...";
 
-            weatherDetails.hidden = true;
+        // CITY AUTOCOMPLETE
+
+        async function findCities(query) {
+            const requestNumber = ++searchNumber;
+
+            if (query.length < 2) {
+                suggestions.hidden = true;
+                suggestions.replaceChildren();
+                return;
+            }
 
             try {
-                const response = await fetch(weatherURL);
+                const url =
+                    "https://geocoding-api.open-meteo.com/v1/search?name=" +
+                    encodeURIComponent(query) +
+                    "&count=8&language=en&format=json";
+
+                const response = await fetch(url);
 
                 if (!response.ok) {
-                    throw new Error("Weather service unavailable.");
+                    throw new Error("City search unavailable.");
+                }
+
+                const data = await response.json();
+
+                if (requestNumber !== searchNumber) return;
+
+                suggestions.replaceChildren();
+
+                const cities = data.results || [];
+
+                if (cities.length === 0) {
+                    suggestions.hidden = true;
+                    return;
+                }
+
+                cities.forEach(function (city) {
+                    const item = document.createElement("li");
+
+                    const details = [
+                        city.admin1,
+                        city.country
+                    ].filter(Boolean).join(", ");
+
+                    item.textContent = city.name +
+                        (details ? ", " + details : "");
+
+                    item.setAttribute("role", "option");
+                    item.tabIndex = 0;
+
+                    function chooseCity() {
+                        selectedLocation = city;
+                        cityInput.value = city.name;
+                        suggestions.hidden = true;
+                        suggestions.replaceChildren();
+                        loadWeather(city);
+                    }
+
+                    item.addEventListener("click", chooseCity);
+
+                    item.addEventListener("keydown", function (event) {
+                        if (event.key === "Enter" || event.key === " ") {
+                            event.preventDefault();
+                            chooseCity();
+                        }
+                    });
+
+                    suggestions.appendChild(item);
+                });
+
+                suggestions.hidden = false;
+
+            } catch (error) {
+                if (requestNumber === searchNumber) {
+                    suggestions.hidden = true;
+                }
+            }
+        }
+
+
+        cityInput.addEventListener("input", function () {
+            clearTimeout(suggestionTimer);
+            selectedLocation = null;
+
+            suggestionTimer = setTimeout(function () {
+                findCities(cityInput.value.trim());
+            }, 350);
+        });
+
+
+        // WEATHER INFORMATION
+
+        async function loadWeather(location) {
+            weatherButton.disabled = true;
+            refreshButton.disabled = true;
+
+            weatherStatus.textContent = "Loading weather...";
+            weatherDetails.hidden = true;
+            suggestions.hidden = true;
+
+            try {
+                const url =
+                    "https://api.open-meteo.com/v1/forecast" +
+                    "?latitude=" + location.latitude +
+                    "&longitude=" + location.longitude +
+                    "&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m" +
+                    "&temperature_unit=fahrenheit" +
+                    "&wind_speed_unit=mph" +
+                    "&timezone=auto";
+
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error("Weather service is unavailable.");
                 }
 
                 const data = await response.json();
 
                 if (!data.current) {
-                    throw new Error("Weather data is missing.");
+                    throw new Error("Weather information is unavailable.");
                 }
 
                 const current = data.current;
@@ -197,6 +299,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 const weatherInfo =
                     weatherDescriptions[current.weather_code] ||
                     ["Current conditions", "🌤️"];
+
+                document.getElementById("weather-city").textContent =
+                    location.name +
+                    (location.country ? ", " + location.country : "");
 
                 document.getElementById("weather-icon").textContent =
                     weatherInfo[1];
@@ -212,40 +318,111 @@ document.addEventListener("DOMContentLoaded", function () {
                     Math.round(current.apparent_temperature) + "°F";
 
                 document.getElementById("weather-humidity").textContent =
-                    "Humidity: " +
-                    current.relative_humidity_2m + "%";
+                    "Humidity: " + current.relative_humidity_2m + "%";
 
                 document.getElementById("weather-wind").textContent =
-                    "Wind: " +
-                    Math.round(current.wind_speed_10m) + " mph";
-
-                const updatedTime = new Date(current.time);
+                    "Wind: " + Math.round(current.wind_speed_10m) + " mph";
 
                 document.getElementById("weather-updated").textContent =
                     "Last updated: " +
-                    updatedTime.toLocaleTimeString("en-US", {
-                        hour: "numeric",
-                        minute: "2-digit"
-                    });
+                    new Date(current.time).toLocaleString();
 
+                currentLocation = location;
                 weatherDetails.hidden = false;
 
                 weatherStatus.textContent =
-                    "Current weather in Port St. Lucie, Florida";
+                    "Current weather successfully loaded!";
 
             } catch (error) {
                 weatherStatus.textContent =
-                    "Weather could not load. Please check your connection and try again.";
-
+                    error.message || "Weather could not load. Please try again.";
             } finally {
+                weatherButton.disabled = false;
+                refreshButton.disabled = false;
+            }
+        }
+
+
+        // SEARCH BUTTON
+
+        async function searchCity(city) {
+            weatherButton.disabled = true;
+            weatherStatus.textContent = "Finding " + city + "...";
+            suggestions.hidden = true;
+
+            try {
+                const url =
+                    "https://geocoding-api.open-meteo.com/v1/search?name=" +
+                    encodeURIComponent(city) +
+                    "&count=1&language=en&format=json";
+
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error("City search is unavailable.");
+                }
+
+                const data = await response.json();
+
+                if (!data.results || data.results.length === 0) {
+                    throw new Error("City not found. Please try another city.");
+                }
+
+                await loadWeather(data.results[0]);
+
+            } catch (error) {
+                weatherStatus.textContent = error.message;
                 weatherButton.disabled = false;
             }
         }
 
-        weatherButton.addEventListener("click", getWeather);
 
-        // Load weather automatically when the page opens.
-        getWeather();
+        weatherForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const city = cityInput.value.trim();
+
+            if (!city) return;
+
+            if (selectedLocation) {
+                loadWeather(selectedLocation);
+            } else {
+                searchCity(city);
+            }
+
+            if (weatherSection) {
+                weatherSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
+        });
+
+
+        // REFRESH CURRENT CITY
+
+        refreshButton.addEventListener("click", function () {
+            loadWeather(currentLocation);
+        });
+
+
+        // HIDE SUGGESTIONS WHEN CLICKING OUTSIDE
+
+        document.addEventListener("click", function (event) {
+            if (
+                !cityInput.contains(event.target) &&
+                !suggestions.contains(event.target)
+            ) {
+                suggestions.hidden = true;
+            }
+        });
+
+
+        // INITIAL WEATHER
+
+        cityInput.value = "Port St. Lucie";
+        loadWeather(currentLocation);
+
     }
 
 });
