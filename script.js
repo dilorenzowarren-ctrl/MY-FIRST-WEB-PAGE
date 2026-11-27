@@ -4,7 +4,34 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // ==========================================
-    // WEATHER DASHBOARD - WORLDWIDE CITY SEARCH
+    // MOBILE NAVIGATION MENU
+    // ==========================================
+
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+
+    if (menuToggle && navLinks) {
+
+        menuToggle.addEventListener("click", () => {
+            const isOpen = navLinks.classList.toggle("active");
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+        });
+
+        navLinks.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                navLinks.classList.remove("active");
+                menuToggle.setAttribute("aria-expanded", "false");
+            });
+        });
+    }
+
+
+    // ==========================================
+    // WORLDWIDE WEATHER SEARCH
     // ==========================================
 
     const weatherForm = document.getElementById("weather-form");
@@ -16,13 +43,160 @@ document.addEventListener("DOMContentLoaded", () => {
     const refreshButton = document.getElementById("weather-refresh-button");
 
     let selectedCity = null;
-    let searchTimer = null;
-    let activeSuggestion = -1;
-    let suggestionCities = [];
-    let latestSearchId = 0;
     let lastWeatherLocation = null;
+    let suggestionCities = [];
+    let activeSuggestion = -1;
+    let searchTimer;
+    let latestSearchId = 0;
 
-    // Check that the weather HTML elements exist.
+    const weatherCodes = {
+        0: ["Clear sky", "☀️"],
+        1: ["Mainly clear", "🌤️"],
+        2: ["Partly cloudy", "⛅"],
+        3: ["Overcast", "☁️"],
+        45: ["Fog", "🌫️"],
+        48: ["Rime fog", "🌫️"],
+        51: ["Light drizzle", "🌦️"],
+        53: ["Moderate drizzle", "🌦️"],
+        55: ["Dense drizzle", "🌧️"],
+        56: ["Freezing drizzle", "🌧️"],
+        57: ["Heavy freezing drizzle", "🌧️"],
+        61: ["Slight rain", "🌧️"],
+        63: ["Moderate rain", "🌧️"],
+        65: ["Heavy rain", "🌧️"],
+        66: ["Freezing rain", "🌧️"],
+        67: ["Heavy freezing rain", "🌧️"],
+        71: ["Slight snow", "🌨️"],
+        73: ["Moderate snow", "🌨️"],
+        75: ["Heavy snow", "❄️"],
+        77: ["Snow grains", "❄️"],
+        80: ["Rain showers", "🌦️"],
+        81: ["Moderate rain showers", "🌧️"],
+        82: ["Heavy rain showers", "⛈️"],
+        85: ["Snow showers", "🌨️"],
+        86: ["Heavy snow showers", "❄️"],
+        95: ["Thunderstorm", "⛈️"],
+        96: ["Thunderstorm with hail", "⛈️"],
+        99: ["Severe thunderstorm", "⛈️"]
+    };
+
+    function showWeatherStatus(message, isError = false) {
+        if (!weatherStatus) return;
+
+        weatherStatus.textContent = message;
+        weatherStatus.classList.toggle("weather-error", isError);
+    }
+
+    function closeSuggestions() {
+        if (!suggestions) return;
+
+        suggestions.replaceChildren();
+        suggestions.hidden = true;
+        suggestionCities = [];
+        activeSuggestion = -1;
+    }
+
+    function updateSuggestionSelection() {
+        const buttons = suggestions.querySelectorAll("button");
+
+        buttons.forEach((button, index) => {
+            button.setAttribute(
+                "aria-selected",
+                String(index === activeSuggestion)
+            );
+        });
+    }
+
+    function showSuggestions(cities) {
+        closeSuggestions();
+
+        if (!cities.length) return;
+
+        suggestionCities = cities;
+
+        cities.forEach((city, index) => {
+            const item = document.createElement("li");
+            const button = document.createElement("button");
+
+            button.type = "button";
+            button.setAttribute("role", "option");
+
+            button.textContent = [
+                city.name,
+                city.admin1,
+                city.country
+            ].filter(Boolean).join(", ");
+
+            button.addEventListener("click", () => {
+                selectCity(index);
+            });
+
+            item.appendChild(button);
+            suggestions.appendChild(item);
+        });
+
+        suggestions.hidden = false;
+    }
+
+    function selectCity(index) {
+        const city = suggestionCities[index];
+
+        if (!city) return;
+
+        selectedCity = city;
+
+        citySearch.value = [
+            city.name,
+            city.admin1,
+            city.country
+        ].filter(Boolean).join(", ");
+
+        closeSuggestions();
+        loadWeather(city);
+    }
+
+    async function findCities(query) {
+        const searchId = ++latestSearchId;
+
+        try {
+            const url = new URL(
+                "https://geocoding-api.open-meteo.com/v1/search"
+            );
+
+            url.search = new URLSearchParams({
+                name: query,
+                count: "6",
+                language: "en",
+                format: "json"
+            });
+
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error("City search is unavailable.");
+            }
+
+            const data = await response.json();
+
+            if (searchId !== latestSearchId) return;
+
+            showSuggestions(data.results || []);
+
+            if (!data.results || data.results.length === 0) {
+                showWeatherStatus("No matching cities found.");
+            }
+
+        } catch (error) {
+            if (searchId === latestSearchId) {
+                closeSuggestions();
+                showWeatherStatus(
+                    "Unable to search cities. Please try again.",
+                    true
+                );
+            }
+        }
+    }
+
     if (
         weatherForm &&
         citySearch &&
@@ -33,146 +207,8 @@ document.addEventListener("DOMContentLoaded", () => {
         refreshButton
     ) {
 
-        const weatherCodes = {
-            0: ["Clear sky", "☀️"],
-            1: ["Mainly clear", "🌤️"],
-            2: ["Partly cloudy", "⛅"],
-            3: ["Overcast", "☁️"],
-            45: ["Fog", "🌫️"],
-            48: ["Depositing rime fog", "🌫️"],
-            51: ["Light drizzle", "🌦️"],
-            53: ["Moderate drizzle", "🌦️"],
-            55: ["Dense drizzle", "🌧️"],
-            56: ["Light freezing drizzle", "🌧️"],
-            57: ["Dense freezing drizzle", "🌧️"],
-            61: ["Slight rain", "🌧️"],
-            63: ["Moderate rain", "🌧️"],
-            65: ["Heavy rain", "🌧️"],
-            66: ["Light freezing rain", "🌧️"],
-            67: ["Heavy freezing rain", "🌧️"],
-            71: ["Slight snowfall", "🌨️"],
-            73: ["Moderate snowfall", "🌨️"],
-            75: ["Heavy snowfall", "❄️"],
-            77: ["Snow grains", "❄️"],
-            80: ["Slight rain showers", "🌦️"],
-            81: ["Moderate rain showers", "🌧️"],
-            82: ["Violent rain showers", "⛈️"],
-            85: ["Snow showers", "🌨️"],
-            86: ["Heavy snow showers", "❄️"],
-            95: ["Thunderstorm", "⛈️"],
-            96: ["Thunderstorm with hail", "⛈️"],
-            99: ["Severe thunderstorm with hail", "⛈️"]
-        };
+        // CITY AUTOCOMPLETE
 
-        function showWeatherStatus(message, isError = false) {
-            weatherStatus.textContent = message;
-            weatherStatus.classList.toggle("weather-error", isError);
-        }
-
-        function closeSuggestions() {
-            suggestions.replaceChildren();
-            suggestions.hidden = true;
-            activeSuggestion = -1;
-            suggestionCities = [];
-        }
-
-        // Build the city dropdown.
-        function showSuggestions(cities) {
-            closeSuggestions();
-
-            suggestionCities = cities;
-
-            if (!cities.length) {
-                return;
-            }
-
-            cities.forEach((city, index) => {
-                const item = document.createElement("li");
-                const option = document.createElement("button");
-
-                option.type = "button";
-                option.setAttribute("role", "option");
-
-                option.textContent = [
-                    city.name,
-                    city.admin1,
-                    city.country
-                ].filter(Boolean).join(", ");
-
-                option.addEventListener("click", () => {
-                    selectCity(index);
-                });
-
-                item.appendChild(option);
-                suggestions.appendChild(item);
-            });
-
-            suggestions.hidden = false;
-        }
-
-        // Select a city from the dropdown.
-        function selectCity(index) {
-            const city = suggestionCities[index];
-
-            if (!city) {
-                return;
-            }
-
-            selectedCity = city;
-
-            citySearch.value = [
-                city.name,
-                city.admin1,
-                city.country
-            ].filter(Boolean).join(", ");
-
-            closeSuggestions();
-            loadWeather(city);
-        }
-
-        // Search for cities worldwide.
-        async function findCities(query) {
-            const searchId = ++latestSearchId;
-
-            try {
-                const url = new URL(
-                    "https://geocoding-api.open-meteo.com/v1/search"
-                );
-
-                url.search = new URLSearchParams({
-                    name: query,
-                    count: "6",
-                    language: "en",
-                    format: "json"
-                });
-
-                const response = await fetch(url);
-
-                if (!response.ok) {
-                    throw new Error("City search is unavailable.");
-                }
-
-                const data = await response.json();
-
-                // Ignore older searches that finish late.
-                if (searchId !== latestSearchId) {
-                    return;
-                }
-
-                showSuggestions(data.results || []);
-
-            } catch (error) {
-                if (searchId === latestSearchId) {
-                    closeSuggestions();
-                    showWeatherStatus(
-                        "Unable to search cities. Please try again.",
-                        true
-                    );
-                }
-            }
-        }
-
-        // Search while the user types.
         citySearch.addEventListener("input", () => {
             selectedCity = null;
             clearTimeout(searchTimer);
@@ -182,6 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (query.length < 2) {
                 latestSearchId++;
                 closeSuggestions();
+                showWeatherStatus("Enter at least two letters to search.");
                 return;
             }
 
@@ -192,16 +229,18 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 350);
         });
 
-        // Keyboard controls for the dropdown.
-        citySearch.addEventListener("keydown", (event) => {
+
+        // KEYBOARD NAVIGATION AND ENTER KEY
+
+        citySearch.addEventListener("keydown", event => {
 
             if (event.key === "Enter") {
                 event.preventDefault();
 
+                clearTimeout(searchTimer);
+
                 if (!suggestions.hidden && suggestionCities.length > 0) {
-                    selectCity(
-                        activeSuggestion >= 0 ? activeSuggestion : 0
-                    );
+                    selectCity(activeSuggestion >= 0 ? activeSuggestion : 0);
                 } else {
                     weatherForm.requestSubmit();
                 }
@@ -216,6 +255,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     activeSuggestion + 1,
                     suggestionCities.length - 1
                 );
+
+                updateSuggestionSelection();
             }
 
             if (event.key === "ArrowUp" && !suggestions.hidden) {
@@ -225,31 +266,27 @@ document.addEventListener("DOMContentLoaded", () => {
                     activeSuggestion - 1,
                     0
                 );
+
+                updateSuggestionSelection();
             }
 
             if (event.key === "Escape") {
                 closeSuggestions();
-                return;
             }
-
-            const buttons = suggestions.querySelectorAll("button");
-
-            buttons.forEach((button, index) => {
-                button.setAttribute(
-                    "aria-selected",
-                    String(index === activeSuggestion)
-                );
-            });
         });
 
-        // Close dropdown when clicking outside the weather form.
-        document.addEventListener("click", (event) => {
+
+        // CLOSE DROPDOWN WHEN CLICKING OUTSIDE
+
+        document.addEventListener("click", event => {
             if (!weatherForm.contains(event.target)) {
                 closeSuggestions();
             }
         });
 
-        // Load current weather for a selected city.
+
+        // LOAD WEATHER
+
         async function loadWeather(city) {
 
             if (
@@ -257,13 +294,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 !Number.isFinite(city.latitude) ||
                 !Number.isFinite(city.longitude)
             ) {
-                showWeatherStatus("Please choose a valid city.", true);
+                showWeatherStatus("Please select a valid city.", true);
                 return;
             }
 
             lastWeatherLocation = city;
-
             weatherResults.hidden = true;
+
             showWeatherStatus("Loading current weather...");
 
             searchButton.disabled = true;
@@ -277,17 +314,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 url.search = new URLSearchParams({
                     latitude: city.latitude,
                     longitude: city.longitude,
-
                     current: [
                         "temperature_2m",
                         "relative_humidity_2m",
                         "apparent_temperature",
-                        "is_day",
                         "precipitation",
                         "weather_code",
                         "wind_speed_10m"
                     ].join(","),
-
                     temperature_unit: "fahrenheit",
                     wind_speed_unit: "mph",
                     timezone: "auto"
@@ -296,13 +330,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 const response = await fetch(url);
 
                 if (!response.ok) {
-                    throw new Error("Weather service returned an error.");
+                    throw new Error("Weather service is unavailable.");
                 }
 
                 const data = await response.json();
 
                 if (!data.current) {
-                    throw new Error("Weather information is unavailable.");
+                    throw new Error("Weather information was not returned.");
                 }
 
                 displayWeather(city, data.current);
@@ -311,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             } catch (error) {
                 showWeatherStatus(
-                    "Sorry, we couldn't load the weather. Check your connection and try again.",
+                    "Unable to load weather. Please check your connection and try again.",
                     true
                 );
 
@@ -321,7 +355,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        // Display weather information on the page.
+
+        // DISPLAY WEATHER INFORMATION
+
         function displayWeather(city, current) {
 
             const weather = weatherCodes[current.weather_code] ||
@@ -358,8 +394,10 @@ document.addEventListener("DOMContentLoaded", () => {
             weatherResults.hidden = false;
         }
 
-        // Prevent the page from refreshing when the form is submitted.
-        weatherForm.addEventListener("submit", async (event) => {
+
+        // WEATHER FORM SUBMISSION
+
+        weatherForm.addEventListener("submit", async event => {
 
             event.preventDefault();
 
@@ -379,6 +417,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             showWeatherStatus("Finding your city...");
+
+            searchButton.disabled = true;
 
             try {
                 const url = new URL(
@@ -400,27 +440,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const data = await response.json();
 
-                if (!data.results || !data.results.length) {
-                    throw new Error(
-                        "City not found. Try another spelling."
-                    );
+                if (!data.results || data.results.length === 0) {
+                    throw new Error("City not found. Try another spelling.");
                 }
 
                 selectedCity = data.results[0];
+
+                citySearch.value = [
+                    selectedCity.name,
+                    selectedCity.admin1,
+                    selectedCity.country
+                ].filter(Boolean).join(", ");
 
                 closeSuggestions();
 
                 await loadWeather(selectedCity);
 
             } catch (error) {
-                showWeatherStatus(
-                    error.message || "Unable to find that city.",
-                    true
-                );
+                showWeatherStatus(error.message, true);
+
+            } finally {
+                searchButton.disabled = false;
             }
         });
 
-        // Refresh weather for the last selected city.
+
+        // REFRESH WEATHER
+
         refreshButton.addEventListener("click", () => {
             if (lastWeatherLocation) {
                 loadWeather(lastWeatherLocation);
@@ -430,10 +476,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ==========================================
-    // DOM MANIPULATION & EVENTS ASSIGNMENT
+    // DOM MANIPULATION ASSIGNMENT
     // ==========================================
 
-    // Requirement 1: Button changes page content.
+    // REQUIREMENT 1: BUTTON CHANGES CONTENT
 
     const messageButton = document.getElementById("message-button");
     const welcomeMessage = document.getElementById("welcome-message");
@@ -441,17 +487,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (messageButton && welcomeMessage) {
         messageButton.addEventListener("click", () => {
             welcomeMessage.textContent =
-                "Thanks for visiting! JavaScript is working successfully!";
+                "Thanks for visiting! JavaScript is working successfully.";
         });
     }
 
 
-    // Requirement 2: Interactive CSS styling.
+    // REQUIREMENT 2: INTERACTIVE CSS STYLING
 
     const colorInput = document.getElementById("color-input");
     const inputFeedback = document.getElementById("input-feedback");
 
     if (colorInput && inputFeedback) {
+
         colorInput.addEventListener("input", () => {
 
             const hasText = colorInput.value.trim().length > 0;
@@ -465,8 +512,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // Requirement 3: Dynamic list using createElement()
-    // and appendChild().
+    // REQUIREMENT 3: DYNAMIC LIST
+    // Uses createElement() and appendChild().
 
     const itemInput = document.getElementById("item-input");
     const addItemButton = document.getElementById("add-item-button");
@@ -518,77 +565,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         addItemButton.addEventListener("click", addListItem);
 
-        itemInput.addEventListener("keydown", (event) => {
+        itemInput.addEventListener("keydown", event => {
             if (event.key === "Enter") {
                 event.preventDefault();
                 addListItem();
-            }
-        });
-    }
-
-
-    // ==========================================
-    // MOBILE NAVIGATION
-    // ==========================================
-
-    const menuToggle = document.querySelector(".menu-toggle");
-    const navLinks = document.querySelector(".nav-links");
-
-    if (menuToggle && navLinks) {
-
-        menuToggle.addEventListener("click", () => {
-
-            const isOpen = navLinks.classList.toggle("active");
-
-            menuToggle.setAttribute(
-                "aria-expanded",
-                String(isOpen)
-            );
-        });
-
-        navLinks.querySelectorAll("a").forEach((link) => {
-
-            link.addEventListener("click", () => {
-                navLinks.classList.remove("active");
-                menuToggle.setAttribute("aria-expanded", "false");
-            });
-        });
-    }
-
-
-    // ==========================================
-    // CONTACT FORM VALIDATION
-    // ==========================================
-
-    const contactForm = document.querySelector("#contact-form");
-
-    if (contactForm) {
-
-        contactForm.addEventListener("submit", (event) => {
-
-            const name = contactForm.querySelector("#name");
-            const email = contactForm.querySelector("#email");
-            const message = contactForm.querySelector("#message");
-
-            if (!name || !email || !message) {
-                return;
-            }
-
-            if (
-                !name.value.trim() ||
-                !email.value.trim() ||
-                !message.value.trim()
-            ) {
-                event.preventDefault();
-                alert("Please complete all contact form fields.");
-                return;
-            }
-
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-            if (!emailPattern.test(email.value.trim())) {
-                event.preventDefault();
-                alert("Please enter a valid email address.");
             }
         });
     }
